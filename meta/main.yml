@@ -1,0 +1,18 @@
+---
+galaxy_info:
+  role_name: ansible-openvpn
+  author: borisskert
+  description: Installation role for an openvpn docker container
+  license: MIT
+  min_ansible_version: 2.9
+  platforms:
+    - name: Ubuntu
+      versions:
+        - xenial
+        - bionic
+        - focal
+  categories:
+    - development
+    - packaging
+    - system
+dependencies: []

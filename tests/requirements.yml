@@ -1,0 +1,8 @@
+---
+- name: install-docker
+  src: https://github.com/borisskert/ansible-docker.git
+  scm: git
+
+- name: install-avahi
+  src: https://github.com/borisskert/ansible-avahi.git
+  scm: git
