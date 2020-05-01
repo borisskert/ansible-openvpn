@@ -1,0 +1,9 @@
+---
+- name: Check 'working_directory' parameter
+  assert:
+    that:
+      - "working_directory is defined"
+      - "working_directory | length > 0"
+    fail_msg: "parameter 'working_directory' is missing"
+
+- include: check-ca-parameters.yml

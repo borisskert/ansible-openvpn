@@ -1,0 +1,37 @@
+---
+- name: Create CA directory
+  file:
+    path: "{{ca_directory}}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Generate an OpenSSL RSA private key
+  openssl_privatekey:
+    path: "{{ca_private_key_path}}"
+    size: "{{ca_size}}"
+
+- name: Generate an OpenSSL Certificate Signing Request
+  openssl_csr:
+    path: "{{ca_csr_path}}"
+    privatekey_path: "{{ca_private_key_path}}"
+    common_name: "{{ca_common_name}}"
+    country_name: "{{ca_country_name}}"
+    state_or_province_name: "{{ca_state_or_province_name}}"
+    locality_name: "{{ca_locality_name}}"
+    organization_name: "{{ca_organization_name}}"
+    organizational_unit_name: "{{ca_organizational_unit_name}}"
+
+- name: Check if certificate file exists
+  stat:
+    path: "{{ca_cert_path}}"
+  register: cert_file_result
+
+- name: Generate a Self Signed OpenSSL certificate
+  openssl_certificate:
+    path: "{{ca_cert_path}}"
+    privatekey_path: "{{ca_private_key_path}}"
+    csr_path: "{{ca_csr_path}}"
+    provider: selfsigned
+  when: not cert_file_result.stat.exists

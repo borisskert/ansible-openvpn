@@ -9,3 +9,13 @@
       install_pip_docker: yes
 
     - role: ansible-openvpn
+      working_directory: /srv/openvpn
+      ca_common_name: MyCommonName
+      ca_country_name: US
+      ca_state_or_province_name: CA
+      ca_locality_name: San Francisco
+      ca_organization_name: Fort-Funston
+      ca_email_address: me@myhost.mydomain
+      ca_organizational_unit_name: MyOrganizationalUnit
+      clients:
+        - vpnclient01
