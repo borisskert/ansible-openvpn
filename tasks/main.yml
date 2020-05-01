@@ -35,3 +35,5 @@
     group: root
     mode: 0644
   register: openvpn_config
+
+- include: create-clients.yml

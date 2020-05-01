@@ -1,0 +1,18 @@
+---
+- name: Create client certs directory
+  file:
+    path: "{{client_certs_directory}}"
+    state: directory
+
+- name: Create client keys directory
+  file:
+    path: "{{client_keys_directory}}"
+    state: directory
+
+- name: Create client csr directory
+  file:
+    path: "{{client_csr_directory}}"
+    state: directory
+
+- include: create-client.yml
+  with_items: "{{clients}}"

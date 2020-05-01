@@ -21,6 +21,15 @@ server_cert_path: "{{working_directory}}/certs/Server.crt"
 
 config_volume: "{{working_directory}}/config"
 
+
+clients: []
+
+client_keys_directory: "{{working_directory}}/clients/private"
+client_csr_directory: "{{working_directory}}/clients/csr"
+client_certs_directory: "{{working_directory}}/clients/certs"
+client_cert_size: 4096
+
+
 docker_working_directory: /opt/openvpn/docker
 
 alpine_version: latest
