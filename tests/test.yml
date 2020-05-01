@@ -9,16 +9,24 @@
       install_pip_docker: yes
 
     - role: ansible-openvpn
+      alpine_version: 3.11.6
+      openvpn_version: 2.4.8-r1
+      openvpn_port: 1194
+      interface: 0.0.0.0
       working_directory: /srv/openvpn
-      ca_common_name: MyCommonName
+      ca_common_name: mydomain.org
       ca_country_name: US
       ca_state_or_province_name: CA
       ca_locality_name: San Francisco
       ca_organization_name: Fort-Funston
-      ca_email_address: me@myhost.mydomain
-      ca_organizational_unit_name: MyOrganizationalUnit
-      server_common_name: 192.168.33.21
-      dh_parameter_size: 1024
+      ca_email_address: me@mydomain.org
+      ca_organizational_unit_name: IT Division
+      server_common_name: openvpn.mydomain.org
       server_address: 192.168.33.21
+      ca_key_size: 4096
+      server_key_size: 4096
+      dh_parameter_size: 4096
+      client_cert_size: 4096
+      download_dir: ~/my-ovpn-clients
       clients:
         - vpnclient01

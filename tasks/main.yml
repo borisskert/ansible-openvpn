@@ -1,11 +1,10 @@
 ---
 - include: check-parameters.yml
 - include: create-certificate-authority.yml
-- include: create-docker-image.yml
-
 - include: create-server-certificate.yml
 - include: create_dh_parameter.yml
 - include: setup-openvpn-config.yml
+- include: create-docker-image.yml
 - include: create-tls-auth-parameter.yml
 - include: create-clients.yml
 - include: setup-systemd-service.yml

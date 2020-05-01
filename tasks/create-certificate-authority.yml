@@ -10,7 +10,7 @@
 - name: Generate an OpenSSL RSA private key
   openssl_privatekey:
     path: "{{ca_private_key_path}}"
-    size: "{{ca_size}}"
+    size: "{{ca_key_size}}"
 
 - name: Generate an OpenSSL Certificate Signing Request
   openssl_csr:
