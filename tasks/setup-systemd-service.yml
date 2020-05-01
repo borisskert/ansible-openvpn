@@ -21,6 +21,7 @@
     dockerimage.changed
     or systemd_service.changed
     or openvpn_config.changed
+    or dh_parameter.changed
 
 - name: Start service (if not started already)
   service:
