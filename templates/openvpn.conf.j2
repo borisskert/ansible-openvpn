@@ -2,10 +2,10 @@ port 1194
 proto udp
 dev tun
 
-ca /etc/openvpn/easy-rsa/keys/ca.crt
-cert /etc/openvpn/easy-rsa/keys/Server.crt
-key /etc/openvpn/easy-rsa/keys/Server.key
-#dh /etc/openvpn/easy-rsa/keys/dh1024.pem # If you changed to 2048, change that here!
+ca /etc/openvpn/keys/ca.crt
+cert /etc/openvpn/keys/Server.crt
+key /etc/openvpn/keys/Server.key
+dh /etc/openvpn/keys/dh.pem
 
 server 10.0.0.0 255.255.255.0
 ifconfig-pool-persist ipp.txt

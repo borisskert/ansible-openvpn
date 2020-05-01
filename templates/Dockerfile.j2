@@ -18,4 +18,4 @@ VOLUME ["/etc/openvpn", "/var/log/openvpn/"]
 
 EXPOSE 1194/udp
 
-ENTRYPOINT ["openvpn"]
+ENTRYPOINT ["openvpn", "--config", "/etc/openvpn/openvpn.conf"]

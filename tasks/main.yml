@@ -3,37 +3,8 @@
 - include: create-certificate-authority.yml
 - include: create-docker-image.yml
 
-- name: Create certs directory
-  file:
-    path: "{{certs_path}}"
-    state: directory
-    owner: root
-    group: root
-    mode: 0755
-
-- name: Generate server certificate
-  openssl_certificate:
-    path: "{{server_cert_path}}"
-    csr_path: "{{ca_csr_path}}"
-    ownca_path: "{{ca_cert_path}}"
-    ownca_privatekey_path: "{{ca_private_key_path}}"
-    provider: ownca
-
-- name: Create config volume
-  file:
-    path: "{{config_volume}}"
-    state: directory
-    owner: root
-    group: root
-    mode: 0755
-
-- name: Template server config
-  template:
-    src: openvpn.conf.j2
-    dest: "{{config_volume}}/openvpn.conf"
-    owner: root
-    group: root
-    mode: 0644
-  register: openvpn_config
-
+- include: create-server-certificate.yml
+- include: create_dh_parameter.yml
+- include: setup-openvpn-config.yml
 - include: create-clients.yml
+- include: setup-systemd-service.yml

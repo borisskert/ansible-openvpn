@@ -8,9 +8,23 @@
 
 - include: check-ca-parameters.yml
 
+- name: Check 'server_common_name' parameter
+  assert:
+    that:
+      - "server_common_name is defined"
+      - "server_common_name | length > 0"
+    fail_msg: "parameter 'server_common_name' is missing"
+
 - name: Check 'config_volume' parameter
   assert:
     that:
       - "config_volume is defined"
       - "config_volume | length > 0"
     fail_msg: "parameter 'config_volume' is missing"
+
+- name: Check 'log_volume' parameter
+  assert:
+    that:
+      - "log_volume is defined"
+      - "log_volume | length > 0"
+    fail_msg: "parameter 'log_volume' is missing"
