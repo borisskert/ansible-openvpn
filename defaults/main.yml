@@ -19,7 +19,7 @@ ca_csr_path: "{{ca_directory}}/ca.csr.pem"
 certs_path: "{{working_directory}}/certs"
 server_cert_path: "{{working_directory}}/certs/Server.crt"
 
-config_volume: ''
+config_volume: "{{working_directory}}/config"
 
 docker_working_directory: /opt/openvpn/docker
 

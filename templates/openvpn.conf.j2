@@ -1,0 +1,22 @@
+port 1194
+proto udp
+dev tun
+
+ca /etc/openvpn/easy-rsa/keys/ca.crt
+cert /etc/openvpn/easy-rsa/keys/Server.crt
+key /etc/openvpn/easy-rsa/keys/Server.key
+#dh /etc/openvpn/easy-rsa/keys/dh1024.pem # If you changed to 2048, change that here!
+
+server 10.0.0.0 255.255.255.0
+ifconfig-pool-persist ipp.txt
+push "route 10.0.0.0 255.0.0.0"
+push "dhcp-option DNS 10.0.0.1"
+keepalive 10 120
+comp-lzo
+user nobody
+group nobody
+persist-key
+persist-tun
+status /var/log/openvpn/status.log
+log-append  /var/log/openvpn/openvpm.log
+verb 3

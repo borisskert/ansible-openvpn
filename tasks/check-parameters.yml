@@ -7,3 +7,10 @@
     fail_msg: "parameter 'working_directory' is missing"
 
 - include: check-ca-parameters.yml
+
+- name: Check 'config_volume' parameter
+  assert:
+    that:
+      - "config_volume is defined"
+      - "config_volume | length > 0"
+    fail_msg: "parameter 'config_volume' is missing"
