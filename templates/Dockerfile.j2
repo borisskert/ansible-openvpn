@@ -1,0 +1,21 @@
+{% if alpine_version is not defined or alpine_version == 'latest' %}
+FROM alpine
+{% else %}
+FROM alpine:{{alpine_version}}
+{% endif %}
+
+MAINTAINER borisskert <boris.skert@gmail.com>
+
+RUN apk --no-cache --no-progress upgrade && \
+    apk --no-cache --no-progress add \
+{% if openvpn_version is not defined or openvpn_version == 'latest' %}
+        openvpn
+{% else %}
+        openvpn={{openvpn_version}}
+{% endif %}
+
+VOLUME ["/etc/openvpn", "/var/log/openvpn/"]
+
+EXPOSE 1194/udp
+
+ENTRYPOINT ["openvpn"]

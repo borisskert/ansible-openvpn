@@ -1,3 +1,4 @@
 ---
 - include: check-parameters.yml
 - include: create-certificate-authority.yml
+- include: create-docker-image.yml
