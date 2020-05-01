@@ -28,7 +28,7 @@
     path: "{{ca_cert_path}}"
   register: cert_file_result
 
-- name: Generate a Self Signed OpenSSL certificate
+- name: Generate CA certificate
   openssl_certificate:
     path: "{{ca_cert_path}}"
     privatekey_path: "{{ca_private_key_path}}"

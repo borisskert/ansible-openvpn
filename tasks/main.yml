@@ -2,3 +2,19 @@
 - include: check-parameters.yml
 - include: create-certificate-authority.yml
 - include: create-docker-image.yml
+
+- name: Create certs directory
+  file:
+    path: "{{certs_path}}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Generate server certificate
+  openssl_certificate:
+    path: "{{server_cert_path}}"
+    csr_path: "{{ca_csr_path}}"
+    ownca_path: "{{ca_cert_path}}"
+    ownca_privatekey_path: "{{ca_private_key_path}}"
+    provider: ownca
