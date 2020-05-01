@@ -1,6 +1,7 @@
 ---
-# Certificate properties
-
+#-----------------------------------------------------------------------------------------------------------------------
+# Server certificate properties
+#-----------------------------------------------------------------------------------------------------------------------
 ca_size: 4096
 ca_locality_name: ''
 ca_country_name: ''
@@ -10,15 +11,22 @@ ca_common_name: ''
 ca_organization_name: ''
 ca_organizational_unit_name: ''
 
-server_key_size: 4096
 server_common_name: ''
-dh_parameter_size: 2048
-client_cert_size: 4096
+server_key_size: 2048
+dh_parameter_size: 1024
 
+
+#-----------------------------------------------------------------------------------------------------------------------
+# Client certificate properties
+#-----------------------------------------------------------------------------------------------------------------------
+
+download_dir: ./clients
+client_cert_size: 2048
 clients: []
 
+#-----------------------------------------------------------------------------------------------------------------------
 # Working directories
-
+#-----------------------------------------------------------------------------------------------------------------------
 working_directory: ''
 
 ca_directory: "{{working_directory}}/ca"
@@ -30,6 +38,7 @@ server_keys_directory: "{{working_directory}}/server-keys"
 server_private_key_path: "{{server_keys_directory}}/server.pem"
 server_csr_path: "{{server_keys_directory}}/server.csr"
 server_cert_path: "{{server_keys_directory}}/server.crt"
+tls_auth_path: "{{server_keys_directory}}/tls/tls-auth.key"
 
 dh_parameter_path: "{{server_keys_directory}}/dh.pem"
 clear_dh_parameter: no
@@ -40,9 +49,20 @@ log_volume: /var/log/openvpn
 client_keys_directory: "{{working_directory}}/clients/private"
 client_csr_directory: "{{working_directory}}/clients/csr"
 client_certs_directory: "{{working_directory}}/clients/certs"
+client_config_directory: "{{working_directory}}/clients/configs"
 
 
+#-----------------------------------------------------------------------------------------------------------------------
+# Client settings
+#-----------------------------------------------------------------------------------------------------------------------
+server_address: ''
+server_port: 1194
+tls_version_min: 1.0
+
+
+#-----------------------------------------------------------------------------------------------------------------------
 # docker image properties
+#-----------------------------------------------------------------------------------------------------------------------
 
 docker_working_directory: /opt/openvpn/docker
 
@@ -52,7 +72,9 @@ image_name: local/openvpn
 force_build: no
 
 
-# docker container and service properties
+#-----------------------------------------------------------------------------------------------------------------------
+# Service properties
+#-----------------------------------------------------------------------------------------------------------------------
 
 service_name: openvpn
 container_name: "{{service_name}}.service"

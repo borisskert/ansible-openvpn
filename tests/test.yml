@@ -17,7 +17,8 @@
       ca_organization_name: Fort-Funston
       ca_email_address: me@myhost.mydomain
       ca_organizational_unit_name: MyOrganizationalUnit
-      server_common_name: myserver
+      server_common_name: 192.168.33.21
       dh_parameter_size: 1024
+      server_address: 192.168.33.21
       clients:
         - vpnclient01

@@ -14,5 +14,10 @@
     path: "{{client_csr_directory}}"
     state: directory
 
+- name: Create client configs directory
+  file:
+    path: "{{client_config_directory}}"
+    state: directory
+
 - include: create-client.yml
   with_items: "{{clients}}"

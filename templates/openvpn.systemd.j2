@@ -15,6 +15,7 @@ ExecStart=/usr/bin/docker run --name {{container_name}} \
             --volume {{server_cert_path}}:/etc/openvpn/keys/Server.crt:ro \
             --volume {{server_private_key_path}}:/etc/openvpn/keys/Server.key:ro \
             --volume {{dh_parameter_path}}:/etc/openvpn/keys/dh.pem:ro \
+            --volume {{tls_auth_path}}:/etc/openvpn/keys/tls-auth.key:ro \
             --volume {{config_volume}}:/etc/openvpn \
             --volume {{log_volume}}:/var/log/openvpn \
 {% if openvpn_port is defined and openvpn_port > 0 %}
@@ -22,7 +23,8 @@ ExecStart=/usr/bin/docker run --name {{container_name}} \
             --privileged \
 {% endif %}
             --tmpfs /tmp \
-            {{image_name}}:{{openvpn_version}}
+            {{image_name}}:{{openvpn_version}} \
+            --config /etc/openvpn/openvpn.conf
 
 ExecStop=-/usr/bin/docker stop {{container_name}}
 ExecStopPost=-/usr/bin/docker rm -f {{container_name}}

@@ -28,3 +28,10 @@
       - "log_volume is defined"
       - "log_volume | length > 0"
     fail_msg: "parameter 'log_volume' is missing"
+
+- name: Check 'server_address' parameter
+  assert:
+    that:
+      - "server_address is defined"
+      - "server_address | length > 0"
+    fail_msg: "parameter 'server_address' is missing"

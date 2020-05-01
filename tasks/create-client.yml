@@ -4,6 +4,8 @@
     client_private_key_path: "{{client_keys_directory}}/{{item}}.key.pem"
     client_csr_path: "{{client_csr_directory}}/{{item}}.csr.pem"
     client_cert_path: "{{client_certs_directory}}/{{item}}.cert.pem"
+    client_ovpn_path: "{{client_config_directory}}/{{item}}.ovpn"
+    client_ovpn_download_path: "{{download_dir}}/{{item}}.ovpn"
 
 - name: Generate an OpenSSL RSA private key
   openssl_privatekey:
@@ -15,6 +17,11 @@
     path: "{{client_csr_path}}"
     privatekey_path: "{{client_private_key_path}}"
     common_name: "{{item}}"
+    key_usage:
+      - digitalSignature
+      - keyAgreement
+    extended_key_usage:
+      - clientAuth
 
 - name: Generate self-singed client certificate
   openssl_certificate:
@@ -23,3 +30,24 @@
     ownca_path: "{{ca_cert_path}}"
     ownca_privatekey_path: "{{ca_private_key_path}}"
     provider: ownca
+
+- name: read client key
+  slurp:
+    src: "{{client_private_key_path}}"
+  register: client_key
+
+- name: read client certificate
+  slurp:
+    src: "{{client_cert_path}}"
+  register: client_cert
+
+- name: build client.ovpn file
+  template:
+    src: client.ovpn.j2
+    dest: "{{client_ovpn_path}}"
+
+- name: download client ovpn
+  fetch:
+    src: "{{client_ovpn_path}}"
+    dest: "{{client_ovpn_download_path}}"
+    flat: yes

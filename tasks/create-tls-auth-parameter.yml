@@ -1,0 +1,19 @@
+---
+- name: Check tls-auth existence
+  stat:
+    path: "{{tls_auth_path}}"
+  register: tls_auth_file
+
+- name: Create tls-auth file
+  docker_container:
+    name: openvpn_create_tls_auth
+    image: "{{image_name}}:{{openvpn_version}}"
+    volumes:
+      - "{{server_keys_directory}}/tls:/tmp/tls"
+    command: --genkey --secret /tmp/tls/tls-auth.key
+  when: not tls_auth_file.stat.exists
+
+- name: read tls-auth file
+  slurp:
+    src: "{{tls_auth_path}}"
+  register: tls_auth

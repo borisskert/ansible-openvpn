@@ -17,6 +17,11 @@
     path: "{{server_csr_path}}"
     privatekey_path: "{{server_private_key_path}}"
     common_name: "{{server_common_name}}"
+    key_usage:
+      - digitalSignature
+      - keyAgreement
+    extended_key_usage:
+      - serverAuth
 
 - name: Generate server certificate
   openssl_certificate:

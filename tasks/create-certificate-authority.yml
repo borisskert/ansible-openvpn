@@ -22,6 +22,9 @@
     locality_name: "{{ca_locality_name}}"
     organization_name: "{{ca_organization_name}}"
     organizational_unit_name: "{{ca_organizational_unit_name}}"
+    key_usage:
+      - cRLSign
+      - keyCertSign
 
 - name: Check if certificate file exists
   stat:
@@ -35,3 +38,8 @@
     csr_path: "{{ca_csr_path}}"
     provider: selfsigned
   when: not cert_file_result.stat.exists
+
+- name: read ca certificate
+  slurp:
+    src: "{{ca_cert_path}}"
+  register: ca_cert

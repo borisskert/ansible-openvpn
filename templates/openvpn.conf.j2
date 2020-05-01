@@ -2,21 +2,39 @@ port 1194
 proto udp
 dev tun
 
+# --- Certificate --- #
 ca /etc/openvpn/keys/ca.crt
 cert /etc/openvpn/keys/Server.crt
 key /etc/openvpn/keys/Server.key
-dh /etc/openvpn/keys/dh.pem
 
+# --- Network --- #
 server 10.0.0.0 255.255.255.0
 ifconfig-pool-persist ipp.txt
 push "route 10.0.0.0 255.0.0.0"
 push "dhcp-option DNS 10.0.0.1"
 keepalive 10 120
-comp-lzo
+
+# --- Cipher --- #
+cipher AES-256-CBC
+
+# --- Auth --- #
+auth SHA512
+
+# --- DH --- #
+dh /etc/openvpn/keys/dh.pem
+
+# --- TLS --- #
+tls-cipher DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-CAMELLIA256-SHA:DHE-RSA-AES256-SHA:DHE-RSA-CAMELLIA128-SHA:DHE-RSA-AES128-SHA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA
+tls-version-min {{tls_version_min}}
+remote-cert-tls client
+tls-auth /etc/openvpn/keys/tls-auth.key 0
+
 user nobody
 group nobody
 persist-key
 persist-tun
+
+# --- Log --- #
 status /var/log/openvpn/status.log
 log-append  /var/log/openvpn/openvpm.log
 verb 3
