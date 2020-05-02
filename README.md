@@ -40,9 +40,16 @@ Configure and install on OpenVPN server as docker container running as systemd s
 | ca_organization_name      | text | yes |       | Certificate authority organization name (i.e. `Fort-Funston`) |
 | ca_organizational_unit_name | text | yes |     | Certificate authority organizational unit name (i.e. `IT Division`) |
 | server_common_name          | text | yes |     | Common name of the server certificate |
-| clients                     | array of texts | no | [] | A list of client common names. For each client a client config in `ovpn` format will be created and downloaded to your local directory defined in `download_dir` |
-| download_dir                | text           | no | `./clients` | Your local directory the created client `ovpn` configuration files will be downloaded |
-| tls_version_min             | text           | no | `1.2` | Option to enforce a minimum TLS version |
+| clients                     | array of `client` | no | [] | A list of clients. For each client a client config in `ovpn` format will be created and downloaded to your local directory defined in `download_dir` |
+| download_dir                | text              | no | `./clients` | Your local directory the created client `ovpn` configuration files will be downloaded |
+| tls_version_min             | text              | no | `1.2` | Option to enforce a minimum TLS version |
+
+### `client` definition
+
+| Variable | Type | Mandatory? | Default | Description                  |
+|----------|------|------------|---------|------------------------------|
+| name     | text | yes        |         | Your client's common name. Used for the corresponding client certificate and `ovpn` filename |
+| passphrase | text | no       |         | The client's private key passphrase                                                          |
 
 ## Usage
 
