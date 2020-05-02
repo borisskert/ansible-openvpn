@@ -7,12 +7,12 @@
     group: root
     mode: 0755
 
-- name: Generate an OpenSSL RSA private key
+- name: Generate the OpenSSL RSA private key for Certificate Authority
   openssl_privatekey:
     path: "{{ca_private_key_path}}"
     size: "{{ca_key_size}}"
 
-- name: Generate an OpenSSL Certificate Signing Request
+- name: Generate the OpenSSL Certificate Signing Request for Certificate Authority
   openssl_csr:
     path: "{{ca_csr_path}}"
     privatekey_path: "{{ca_private_key_path}}"
@@ -26,20 +26,14 @@
       - cRLSign
       - keyCertSign
 
-- name: Check if certificate file exists
-  stat:
-    path: "{{ca_cert_path}}"
-  register: cert_file_result
-
-- name: Generate CA certificate
+- name: Generate Certificate for Certificate Authority
   openssl_certificate:
     path: "{{ca_cert_path}}"
     privatekey_path: "{{ca_private_key_path}}"
     csr_path: "{{ca_csr_path}}"
     provider: selfsigned
-  when: not cert_file_result.stat.exists
 
-- name: read ca certificate
+- name: Read CA Certificate
   slurp:
     src: "{{ca_cert_path}}"
   register: ca_cert

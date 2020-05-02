@@ -7,12 +7,12 @@
     group: root
     mode: 0755
 
-- name: Generate server private key
+- name: Generate the OpenSSL RSA private key for Server
   openssl_privatekey:
     path: "{{server_private_key_path}}"
     size: "{{server_key_size}}"
 
-- name: Generate server's Certificate Signing Request
+- name: Generate the OpenSSL Certificate Signing Request for Server
   openssl_csr:
     path: "{{server_csr_path}}"
     privatekey_path: "{{server_private_key_path}}"
@@ -23,7 +23,7 @@
     extended_key_usage:
       - serverAuth
 
-- name: Generate server certificate
+- name: Generate Certificate for Server
   openssl_certificate:
     path: "{{server_cert_path}}"
     csr_path: "{{server_csr_path}}"

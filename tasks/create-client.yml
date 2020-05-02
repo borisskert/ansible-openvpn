@@ -58,22 +58,22 @@
     ownca_privatekey_path: "{{ca_private_key_path}}"
     provider: ownca
 
-- name: read client key
+- name: Read client key
   slurp:
     src: "{{client_private_key_path}}"
   register: client_key
 
-- name: read client certificate
+- name: Read client certificate
   slurp:
     src: "{{client_cert_path}}"
   register: client_cert
 
-- name: build client.ovpn file
+- name: Build client.ovpn file
   template:
     src: client.ovpn.j2
     dest: "{{client_ovpn_path}}"
 
-- name: download client ovpn
+- name: Download client ovpn
   fetch:
     src: "{{client_ovpn_path}}"
     dest: "{{client_ovpn_download_path}}"
