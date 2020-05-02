@@ -8,3 +8,4 @@
 - include: create-tls-auth-parameter.yml
 - include: create-clients.yml
 - include: setup-systemd-service.yml
+- include: setup-logrotate.yml
