@@ -13,7 +13,7 @@
     command: --genkey --secret /tmp/tls/tls-auth.key
   when: not tls_auth_file.stat.exists
 
-- name: read tls-auth file
+- name: Read tls-auth file
   slurp:
     src: "{{tls_auth_path}}"
   register: tls_auth

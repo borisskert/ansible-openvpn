@@ -1,4 +1,8 @@
 ---
+- name: Setup Diffie-Hellman parameter filename
+  set_fact:
+    dh_parameter_path: "{{server_keys_directory}}/dh{{dh_parameter_size}}.pem"
+
 - name: clear Diffie-Hellman parameter
   file:
     path: "{{dh_parameter_path}}"

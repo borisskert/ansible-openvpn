@@ -79,8 +79,6 @@ Configure and install on OpenVPN server as docker container running as systemd s
       ca_organizational_unit_name: IT Division
       server_common_name: openvpn.mydomain.org
       server_address: 192.168.33.21
-      clients:
-        - vpnclient01
 ```
 
 ### Typical `playbook.yml`
@@ -112,7 +110,9 @@ Configure and install on OpenVPN server as docker container running as systemd s
       download_dir: ~/my-ovpn-clients
       tls_version_min: 1.3
       clients:
-        - vpnclient01
+        - name: vpnclient01
+          passphrase: abc
+        - name: vpnclient02
 ```
 
 ## Running Tests
