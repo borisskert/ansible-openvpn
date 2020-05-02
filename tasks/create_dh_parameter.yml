@@ -18,5 +18,7 @@
   openssl_dhparam:
     path: "{{dh_parameter_path}}"
     size: "{{dh_parameter_size}}"
+    owner: "{{openvpn_user_uid}}"
+    group: "{{openvpn_user_uid}}"
   when: not dh_parameter_file.stat.exists
   register: dh_parameter

@@ -3,14 +3,16 @@
   file:
     path: "{{server_keys_directory}}"
     state: directory
-    owner: root
-    group: root
-    mode: 0755
+    owner: "{{openvpn_user_uid}}"
+    group: "{{openvpn_user_uid}}"
+    mode: 0750
 
 - name: Generate the OpenSSL RSA private key for Server
   openssl_privatekey:
     path: "{{server_private_key_path}}"
     size: "{{server_key_size}}"
+    owner: "{{openvpn_user_uid}}"
+    group: "{{openvpn_user_uid}}"
 
 - name: Generate the OpenSSL Certificate Signing Request for Server
   openssl_csr:
@@ -22,6 +24,8 @@
       - keyAgreement
     extended_key_usage:
       - serverAuth
+    owner: "{{openvpn_user_uid}}"
+    group: "{{openvpn_user_uid}}"
 
 - name: Generate Certificate for Server
   openssl_certificate:
@@ -30,3 +34,5 @@
     ownca_path: "{{ca_cert_path}}"
     ownca_privatekey_path: "{{ca_private_key_path}}"
     provider: ownca
+    owner: "{{openvpn_user_uid}}"
+    group: "{{openvpn_user_uid}}"

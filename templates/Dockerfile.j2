@@ -6,7 +6,8 @@ FROM alpine:{{alpine_version}}
 
 MAINTAINER borisskert <boris.skert@gmail.com>
 
-RUN apk --no-cache --no-progress upgrade && \
+RUN adduser -DHs /sbin/nologin -u {{openvpn_user_uid}} openvpnuser && \
+    apk --no-cache --no-progress upgrade && \
     apk --no-cache --no-progress add \
 {% if openvpn_version is not defined or openvpn_version == 'latest' %}
         openvpn

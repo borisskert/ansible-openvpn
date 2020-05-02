@@ -3,14 +3,16 @@
   file:
     path: "{{ca_directory}}"
     state: directory
-    owner: root
-    group: root
-    mode: 0755
+    owner: "{{openvpn_user_uid}}"
+    group: "{{openvpn_user_uid}}"
+    mode: 0750
 
 - name: Generate the OpenSSL RSA private key for Certificate Authority
   openssl_privatekey:
     path: "{{ca_private_key_path}}"
     size: "{{ca_key_size}}"
+    owner: "{{openvpn_user_uid}}"
+    group: "{{openvpn_user_uid}}"
 
 - name: Generate the OpenSSL Certificate Signing Request for Certificate Authority
   openssl_csr:
@@ -25,6 +27,8 @@
     key_usage:
       - cRLSign
       - keyCertSign
+    owner: "{{openvpn_user_uid}}"
+    group: "{{openvpn_user_uid}}"
 
 - name: Generate Certificate for Certificate Authority
   openssl_certificate:
@@ -32,6 +36,8 @@
     privatekey_path: "{{ca_private_key_path}}"
     csr_path: "{{ca_csr_path}}"
     provider: selfsigned
+    owner: "{{openvpn_user_uid}}"
+    group: "{{openvpn_user_uid}}"
 
 - name: Read CA Certificate
   slurp:

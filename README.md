@@ -43,6 +43,7 @@ Configure and install on OpenVPN server as docker container running as systemd s
 | clients                     | array of `client` | no | [] | A list of clients. For each client a client config in `ovpn` format will be created and downloaded to your local directory defined in `download_dir` |
 | download_dir                | text              | no | `./clients` | Your local directory the created client `ovpn` configuration files will be downloaded |
 | tls_version_min             | text              | no | `1.2` | Option to enforce a minimum TLS version |
+| verbosity                   | number            | no | `3` | The verbosity level of your OpenVPN server |
 
 ### `client` definition
 

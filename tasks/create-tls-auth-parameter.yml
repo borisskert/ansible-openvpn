@@ -13,6 +13,13 @@
     command: --genkey --secret /tmp/tls/tls-auth.key
   when: not tls_auth_file.stat.exists
 
+- name: Setup tls-auth owner
+  file:
+    path: "{{tls_auth_path}}"
+    owner: "{{openvpn_user_uid}}"
+    group: "{{openvpn_user_uid}}"
+    mode: 0700
+
 - name: Read tls-auth file
   slurp:
     src: "{{tls_auth_path}}"

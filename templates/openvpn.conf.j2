@@ -29,12 +29,12 @@ tls-version-min {{tls_version_min}}
 remote-cert-tls client
 tls-auth /etc/openvpn/keys/tls-auth.key 0
 
-user nobody
-group nobody
+user openvpnuser
+group openvpnuser
 persist-key
 persist-tun
 
 # --- Log --- #
 status /var/log/openvpn/status.log
-log-append  /var/log/openvpn/openvpm.log
-verb 3
+log-append  /var/log/openvpn/openvpn.log
+verb {{verbosity}}
