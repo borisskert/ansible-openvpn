@@ -11,8 +11,6 @@
     - role: ansible-openvpn
       alpine_version: 3.11.6
       openvpn_version: 2.4.8-r1
-      openvpn_port: 1194
-      interface: 0.0.0.0
       working_directory: /srv/openvpn
       ca_common_name: mydomain.org
       ca_country_name: US

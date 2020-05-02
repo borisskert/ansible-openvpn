@@ -18,10 +18,10 @@ ExecStart=/usr/bin/docker run --name {{container_name}} \
             --volume {{tls_auth_path}}:/etc/openvpn/keys/tls-auth.key:ro \
             --volume {{config_volume}}:/etc/openvpn \
             --volume {{log_volume}}:/var/log/openvpn \
-{% if openvpn_port is defined and openvpn_port > 0 %}
-            --publish {{interface}}:{{openvpn_port}}:1194/udp \
-            --privileged \
-{% endif %}
+            --volume /etc/resolv.conf:/etc/resolv.conf \
+            --net=host \
+            --cap-add=NET_ADMIN \
+            --device /dev/net/tun \
             --tmpfs /tmp \
             {{image_name}}:{{openvpn_version}} \
             --config /etc/openvpn/openvpn.conf

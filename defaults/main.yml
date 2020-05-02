@@ -76,9 +76,6 @@ force_build: no
 service_name: openvpn
 container_name: "{{service_name}}.service"
 
-openvpn_port: 1194
-interface: 0.0.0.0
-
 
 #-----------------------------------------------------------------------------------------------------------------------
 # Other properties

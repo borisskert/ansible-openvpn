@@ -15,6 +15,9 @@ RUN adduser -DHs /sbin/nologin -u {{openvpn_user_uid}} openvpnuser && \
         openvpn={{openvpn_version}}
 {% endif %}
 
+RUN mkdir /usr/share/openvpn && \
+    cp /etc/openvpn/* /usr/share/openvpn/
+
 VOLUME ["/etc/openvpn", "/var/log/openvpn/"]
 
 EXPOSE 1194/udp

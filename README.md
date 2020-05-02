@@ -27,8 +27,6 @@ Configure and install on OpenVPN server as docker container running as systemd s
 |----------------|------|------------|---------|------------------------------|
 | alpine_version | text | no         | latest  | Your selected alpine version |
 | openvpn_version | text | no        | latest  | Your selected OpenVPN-Server version |
-| openvpn_port    | number | no        | 1194  | Used network port |
-| interface       | ip address | no    | 0.0.0.0 | Bound network address |
 | ca_key_size     | number     | no    | 2048    | Keysize of the Certificate Authority |
 | server_key_size | number     | no    | 2048    | Keysize of the server certificate |
 | dh_parameter_size | number   | no    | 1024    | Size of the Diffie-Hellman parameter |
@@ -92,8 +90,6 @@ Configure and install on OpenVPN server as docker container running as systemd s
     - role: install-openvpn
       alpine_version: 3.11.6
       openvpn_version: 2.4.8-r1
-      openvpn_port: 1194
-      interface: 0.0.0.0
       working_directory: /srv/openvpn
       ca_common_name: mydomain.org
       ca_country_name: US
