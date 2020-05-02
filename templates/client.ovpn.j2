@@ -4,8 +4,8 @@ client
 
     # Connection  #
 #------------------------------------------------
-dev tun
-proto udp
+dev {{network_device}}
+proto {{network_protocol}}
 remote {{server_address}} {{server_port}}
 
     # Speed #
