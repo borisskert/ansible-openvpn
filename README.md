@@ -126,3 +126,44 @@ Run tests:
 cd tests
 ./tests.sh
 ```
+
+## iptables configuration
+
+By default iptables is blocking your openvpn traffic so you need to configure them.
+I didn't use ansible to do that.
+
+[Arash Milani](https://arashmilani.com) wrote a [small article](https://arashmilani.com/post?id=53) that helped me a lot.
+ Thank you for that!
+
+```shell script
+#!/bin/bash
+
+# Backup your iptables settings (restore them with `iptables-restore < ~/iptables.backup`)
+iptables-save > ~/iptables.backup
+
+# Setup your ethernet here. See a list of your interfaces here with this command: `ip link show` 
+INTERFACE=eth0
+
+# Setup your used OpenVPN protocol
+PROTOCOL=udp
+
+# Change the ip address mask according to your info of tun0 result while running `ifconfig` command
+MASK=10.0.0.0/24
+
+# Allow the tcp connection on the OpenVPN port
+iptables -A INPUT -i "$INTERFACE" -m state --state NEW -p "$PROTOCOL" --dport 1194 -j ACCEPT
+
+# Allow TUN interface connections to OpenVPN server
+iptables -A INPUT -i tun+ -j ACCEPT
+
+# Allow TUN interface connections to be forwarded through other interfaces
+iptables -A FORWARD -i tun+ -j ACCEPT
+iptables -A FORWARD -i tun+ -o "$INTERFACE" -m state --state RELATED,ESTABLISHED -j ACCEPT
+iptables -A FORWARD -i "$INTERFACE" -o tun+ -m state --state RELATED,ESTABLISHED -j ACCEPT
+
+# NAT the VPN client traffic to the Internet.
+iptables -t nat -A POSTROUTING -s "$MASK" -o "$INTERFACE" -j MASQUERADE
+
+# If your default iptables OUTPUT value is not ACCEPT, you will also need a line like:
+iptables -A OUTPUT -o tun+ -j ACCEPT
+```
