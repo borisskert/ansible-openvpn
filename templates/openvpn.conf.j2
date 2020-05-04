@@ -8,8 +8,8 @@ cert /etc/openvpn/keys/Server.crt
 key /etc/openvpn/keys/Server.key
 
 # --- Network --- #
-server {{network_ip}} {{network_subnet}}
-ifconfig {{server_ip}} {{network_subnet}}
+server {{network_ip}} {{subnet_mask}}
+ifconfig {{server_ip}} {{subnet_mask}}
 ifconfig-pool-persist /tmp/ipp.txt
 {% if route_gateway is defined and route_gateway | length > 0 %}
 route-gateway {{route_gateway}}

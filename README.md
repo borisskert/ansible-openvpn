@@ -25,8 +25,8 @@ Configure and install on OpenVPN server as docker container running as systemd s
 
 | Variable       | Type | Mandatory? | Default | Description                  |
 |----------------|------|------------|---------|------------------------------|
-| alpine_version | text | no         | latest  | Your selected alpine version |
-| openvpn_version | text | no        | latest  | Your selected OpenVPN-Server version |
+| alpine_version | text | no         | `latest`  | Your selected alpine version |
+| openvpn_version | text | no        | `latest`  | Your selected OpenVPN-Server version |
 | ca_key_size     | number     | no    | 2048    | Keysize of the Certificate Authority |
 | server_key_size | number     | no    | 2048    | Keysize of the server certificate |
 | dh_parameter_size | number   | no    | 1024    | Size of the Diffie-Hellman parameter |
@@ -38,10 +38,18 @@ Configure and install on OpenVPN server as docker container running as systemd s
 | ca_organization_name      | text | yes |       | Certificate authority organization name (i.e. `Fort-Funston`) |
 | ca_organizational_unit_name | text | yes |     | Certificate authority organizational unit name (i.e. `IT Division`) |
 | server_common_name          | text | yes |     | Common name of the server certificate |
+| server_address              | text | yes |     | The external server address (seen by clients) |
 | clients                     | array of `client` | no | [] | A list of clients. For each client a client config in `ovpn` format will be created and downloaded to your local directory defined in `download_dir` |
 | download_dir                | text              | no | `./clients` | Your local directory the created client `ovpn` configuration files will be downloaded |
 | tls_version_min             | text              | no | `1.2` | Option to enforce a minimum TLS version |
 | verbosity                   | number            | no | `3` | The verbosity level of your OpenVPN server |
+| server_ip                   | ip address        | no | `10.0.0.1` | OpenVPN server ip address within the vpn net |
+| network_ip                  | ip address        | no | `10.0.0.0` | OpenVPN network address |
+| subnet_mask                 | subnet mask       | no | `255.255.0.0` | OpenVPN subnet mask |
+| routes                      | array of text     | no | [] | Used routes configured in OpenVPN server |
+| pushes                      | array of text     | no | [] | Rules pushed to the OpenVPN clients |
+| network_device              | text              | no | `tun` | The used OpenVPN device |
+| network_protocol            | text              | no | `udp` | The used OpenVPN protocol |
 
 ### `client` definition
 
@@ -106,6 +114,13 @@ Configure and install on OpenVPN server as docker container running as systemd s
       client_cert_size: 4096
       download_dir: ~/my-ovpn-clients
       tls_version_min: 1.3
+      server_ip: 10.0.0.1
+      network_ip: 10.0.0.0
+      subnet_mask: 255.255.0.0
+      pushes:
+        - dhcp-option DNS 192.168.33.21
+      network_device: tun
+      network_protocol: udp
       clients:
         - name: vpnclient01
           passphrase: abc
