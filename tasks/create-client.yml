@@ -1,34 +1,35 @@
 ---
 - name: Setup variables for Cert
   set_fact:
-    client_private_key_path: "{{client_keys_directory}}/{{item.name}}.key.pem"
-    client_csr_path: "{{client_csr_directory}}/{{item.name}}.csr.pem"
-    client_cert_path: "{{client_certs_directory}}/{{item.name}}.cert.pem"
-    client_ovpn_path: "{{client_config_directory}}/{{item.name}}.ovpn"
-    client_ovpn_download_path: "{{download_dir}}/{{item.name}}.ovpn"
+    client_private_key_path:
+      "{{ client_keys_directory }}/{{ item.name }}.key.pem"
+    client_csr_path: "{{ client_csr_directory }}/{{ item.name }}.csr.pem"
+    client_cert_path: "{{ client_certs_directory }}/{{ item.name }}.cert.pem"
+    client_ovpn_path: "{{ client_config_directory }}/{{ item.name }}.ovpn"
+    client_ovpn_download_path: "{{ download_dir }}/{{ item.name }}.ovpn"
 
 - name: Generate OpenSSL RSA private key for client
   openssl_privatekey:
-    path: "{{client_private_key_path}}"
-    size: "{{client_cert_size}}"
+    path: "{{ client_private_key_path }}"
+    size: "{{ client_cert_size }}"
   when: item.passphrase is not defined
     or item.passphrase | length < 1
 
 - name: Generate encrypted OpenSSL RSA private key for client
   openssl_privatekey:
-    path: "{{client_private_key_path}}"
-    size: "{{client_cert_size}}"
-    passphrase: "{{item.passphrase}}"
+    path: "{{ client_private_key_path }}"
+    size: "{{ client_cert_size }}"
+    passphrase: "{{ item.passphrase }}"
     cipher: auto
   when: item.passphrase is defined
     and item.passphrase | length > 0
 
 - name: Generate encrypted OpenSSL Certificate Signing Request for client
   openssl_csr:
-    path: "{{client_csr_path}}"
-    privatekey_path: "{{client_private_key_path}}"
-    privatekey_passphrase: "{{item.passphrase}}"
-    common_name: "{{item.name}}"
+    path: "{{ client_csr_path }}"
+    privatekey_path: "{{ client_private_key_path }}"
+    privatekey_passphrase: "{{ item.passphrase }}"
+    common_name: "{{ item.name }}"
     key_usage:
       - digitalSignature
       - keyAgreement
@@ -39,9 +40,9 @@
 
 - name: Generate OpenSSL Certificate Signing Request for client
   openssl_csr:
-    path: "{{client_csr_path}}"
-    privatekey_path: "{{client_private_key_path}}"
-    common_name: "{{item.name}}"
+    path: "{{ client_csr_path }}"
+    privatekey_path: "{{ client_private_key_path }}"
+    common_name: "{{ item.name }}"
     key_usage:
       - digitalSignature
       - keyAgreement
@@ -52,29 +53,29 @@
 
 - name: Generate self-singed client certificate
   openssl_certificate:
-    path: "{{client_cert_path}}"
-    csr_path: "{{client_csr_path}}"
-    ownca_path: "{{ca_cert_path}}"
-    ownca_privatekey_path: "{{ca_private_key_path}}"
+    path: "{{ client_cert_path }}"
+    csr_path: "{{ client_csr_path }}"
+    ownca_path: "{{ ca_cert_path }}"
+    ownca_privatekey_path: "{{ ca_private_key_path }}"
     provider: ownca
 
 - name: Read client key
   slurp:
-    src: "{{client_private_key_path}}"
+    src: "{{ client_private_key_path }}"
   register: client_key
 
 - name: Read client certificate
   slurp:
-    src: "{{client_cert_path}}"
+    src: "{{ client_cert_path }}"
   register: client_cert
 
 - name: Build client.ovpn file
   template:
     src: client.ovpn.j2
-    dest: "{{client_ovpn_path}}"
+    dest: "{{ client_ovpn_path }}"
 
 - name: Download client ovpn
   fetch:
-    src: "{{client_ovpn_path}}"
-    dest: "{{client_ovpn_download_path}}"
-    flat: yes
+    src: "{{ client_ovpn_path }}"
+    dest: "{{ client_ovpn_download_path }}"
+    flat: true

@@ -1,7 +1,7 @@
 ---
 - name: Create docker working directory
   file:
-    path: "{{docker_working_directory}}"
+    path: "{{ docker_working_directory }}"
     state: directory
     owner: root
     group: root
@@ -10,7 +10,7 @@
 - name: Template dockerfile
   template:
     src: Dockerfile.j2
-    dest: "{{docker_working_directory}}/Dockerfile"
+    dest: "{{ docker_working_directory }}/Dockerfile"
     owner: root
     group: root
     mode: 0644
@@ -19,14 +19,14 @@
 - name: Build dockerimage
   docker_image:
     build:
-      path: "{{docker_working_directory}}"
-      pull: no
-    name: "{{image_name}}"
-    tag: "{{openvpn_version}}"
+      path: "{{ docker_working_directory }}"
+      pull: false
+    name: "{{ image_name }}"
+    tag: "{{ openvpn_version }}"
     source: build
     state: present
     force_source: "{{
       dockerfile.changed
       or force_build
       }}"
-  register: dockerimage
+  notify: Restart openvpn service

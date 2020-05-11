@@ -1,11 +1,11 @@
 ---
 - name: Create log volume
   file:
-    path: "{{log_volume}}"
+    path: "{{ log_volume }}"
     state: directory
-    owner: "{{openvpn_user_uid}}"
-    group: "{{openvpn_user_uid}}"
-    mode: 0755
+    owner: "{{ openvpn_user_uid }}"
+    group: "{{ openvpn_user_uid }}"
+    mode: 0750
 
 - name: Setup logrotate config
   template:

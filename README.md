@@ -85,7 +85,7 @@ Configure and install on OpenVPN server as docker container running as systemd s
       ca_email_address: me@mydomain.org
       ca_organizational_unit_name: IT Division
       server_common_name: openvpn.mydomain.org
-      server_address: 192.168.33.21
+      server_address: 192.168.33.61
 ```
 
 ### Typical `playbook.yml`
@@ -107,7 +107,7 @@ Configure and install on OpenVPN server as docker container running as systemd s
       ca_email_address: me@mydomain.org
       ca_organizational_unit_name: IT Division
       server_common_name: openvpn.mydomain.org
-      server_address: 192.168.33.21
+      server_address: 192.168.33.61
       ca_key_size: 4096
       server_key_size: 4096
       dh_parameter_size: 4096
@@ -118,7 +118,7 @@ Configure and install on OpenVPN server as docker container running as systemd s
       network_ip: 10.0.0.0
       subnet_mask: 255.255.0.0
       pushes:
-        - dhcp-option DNS 192.168.33.21
+        - dhcp-option DNS 192.168.33.1
       network_device: tun
       network_protocol: udp
       clients:

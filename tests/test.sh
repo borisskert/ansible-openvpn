@@ -26,4 +26,4 @@ done
   (echo 'Netcat test: pass' && exit 0) ||
   (echo 'Netcat test: fail' && exit 1)
 
-#vagrant destroy -f
+vagrant destroy

@@ -12,7 +12,7 @@ RUN adduser -DHs /sbin/nologin -u {{openvpn_user_uid}} openvpnuser && \
 {% if openvpn_version is not defined or openvpn_version == 'latest' %}
         openvpn
 {% else %}
-        openvpn={{openvpn_version}}
+        openvpn~={{openvpn_version}}
 {% endif %}
 
 RUN mkdir /usr/share/openvpn && \

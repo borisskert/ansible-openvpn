@@ -1,5 +1,6 @@
 ---
 - include: check-parameters.yml
+- include: install-requirements.yml
 - include: create-certificate-authority.yml
 - include: create-server-certificate.yml
 - include: create_dh_parameter.yml
@@ -9,3 +10,6 @@
 - include: create-clients.yml
 - include: setup-systemd-service.yml
 - include: setup-logrotate.yml
+
+- name: Start systemd-managed docker containers
+  meta: flush_handlers

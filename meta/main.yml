@@ -11,7 +11,7 @@ galaxy_info:
         - xenial
         - bionic
         - focal
-  categories:
+  galaxy_tags:
     - development
     - packaging
     - system

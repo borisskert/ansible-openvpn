@@ -1,45 +1,47 @@
 ---
 - name: Create CA directory
   file:
-    path: "{{ca_directory}}"
+    path: "{{ ca_directory }}"
     state: directory
-    owner: "{{openvpn_user_uid}}"
-    group: "{{openvpn_user_uid}}"
+    owner: "{{ openvpn_user_uid }}"
+    group: "{{ openvpn_user_uid }}"
     mode: 0750
 
-- name: Generate the OpenSSL RSA private key for Certificate Authority
+- name: Generate the OpenSSL RSA private key
+    for Certificate Authority
   openssl_privatekey:
-    path: "{{ca_private_key_path}}"
-    size: "{{ca_key_size}}"
-    owner: "{{openvpn_user_uid}}"
-    group: "{{openvpn_user_uid}}"
+    path: "{{ ca_private_key_path }}"
+    size: "{{ ca_key_size }}"
+    owner: "{{ openvpn_user_uid }}"
+    group: "{{ openvpn_user_uid }}"
 
-- name: Generate the OpenSSL Certificate Signing Request for Certificate Authority
+- name: Generate the OpenSSL Certificate Signing Request
+    for Certificate Authority
   openssl_csr:
-    path: "{{ca_csr_path}}"
-    privatekey_path: "{{ca_private_key_path}}"
-    common_name: "{{ca_common_name}}"
-    country_name: "{{ca_country_name}}"
-    state_or_province_name: "{{ca_state_or_province_name}}"
-    locality_name: "{{ca_locality_name}}"
-    organization_name: "{{ca_organization_name}}"
-    organizational_unit_name: "{{ca_organizational_unit_name}}"
+    path: "{{ ca_csr_path }}"
+    privatekey_path: "{{ ca_private_key_path }}"
+    common_name: "{{ ca_common_name }}"
+    country_name: "{{ ca_country_name }}"
+    state_or_province_name: "{{ ca_state_or_province_name }}"
+    locality_name: "{{ ca_locality_name }}"
+    organization_name: "{{ ca_organization_name }}"
+    organizational_unit_name: "{{ ca_organizational_unit_name }}"
     key_usage:
       - cRLSign
       - keyCertSign
-    owner: "{{openvpn_user_uid}}"
-    group: "{{openvpn_user_uid}}"
+    owner: "{{ openvpn_user_uid }}"
+    group: "{{ openvpn_user_uid }}"
 
 - name: Generate Certificate for Certificate Authority
   openssl_certificate:
-    path: "{{ca_cert_path}}"
-    privatekey_path: "{{ca_private_key_path}}"
-    csr_path: "{{ca_csr_path}}"
+    path: "{{ ca_cert_path }}"
+    privatekey_path: "{{ ca_private_key_path }}"
+    csr_path: "{{ ca_csr_path }}"
     provider: selfsigned
-    owner: "{{openvpn_user_uid}}"
-    group: "{{openvpn_user_uid}}"
+    owner: "{{ openvpn_user_uid }}"
+    group: "{{ openvpn_user_uid }}"
 
 - name: Read CA Certificate
   slurp:
-    src: "{{ca_cert_path}}"
+    src: "{{ ca_cert_path }}"
   register: ca_cert
