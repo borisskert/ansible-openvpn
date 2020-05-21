@@ -12,6 +12,10 @@
       - "{{ server_keys_directory }}/tls:/tmp/tls"
     command: --genkey --secret /tmp/tls/tls-auth.key
   when: not tls_auth_file.stat.exists
+    and not (
+    molecule_docker_environment is defined
+    and molecule_docker_environment | bool
+    )
 
 - name: Setup tls-auth owner
   file:
@@ -19,8 +23,16 @@
     owner: "{{ openvpn_user_uid }}"
     group: "{{ openvpn_user_uid }}"
     mode: 0700
+  when: not (
+    molecule_docker_environment is defined
+    and molecule_docker_environment | bool
+    )
 
 - name: Read tls-auth file
   slurp:
     src: "{{ tls_auth_path }}"
   register: tls_auth
+  when: not (
+    molecule_docker_environment is defined
+    and molecule_docker_environment | bool
+    )

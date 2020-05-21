@@ -3,5 +3,3 @@
   pip:
     name: pyopenssl
     state: present
-  when: ansible_distribution == 'Ubuntu'
-    and ansible_distribution_release == 'xenial'

@@ -182,3 +182,38 @@ iptables -t nat -A POSTROUTING -s "$MASK" -o "$INTERFACE" -j MASQUERADE
 # If your default iptables OUTPUT value is not ACCEPT, you will also need a line like:
 iptables -A OUTPUT -o tun+ -j ACCEPT
 ```
+
+## Testing
+
+Requirements:
+
+* [Vagrant](https://www.vagrantup.com/)
+* [VirtualBox](https://www.virtualbox.org/)
+* [Ansible](https://docs.ansible.com/)
+* [Molecule](https://molecule.readthedocs.io/en/latest/index.html)
+* [yamllint](https://yamllint.readthedocs.io/en/stable/#)
+* [ansible-lint](https://docs.ansible.com/ansible-lint/)
+* [Docker](https://docs.docker.com/)
+
+### Run within docker
+
+```shell script
+molecule test
+```
+
+### Run within Vagrant
+
+```shell script
+ molecule test --scenario-name vagrant --parallel
+```
+
+I recommend to use [pyenv](https://github.com/pyenv/pyenv) for local testing.
+Within the Github Actions pipeline I use [my own molecule Docker image](https://github.com/borisskert/docker-molecule).
+
+## License
+
+MIT
+
+## Author Information
+
+* [borisskert](https://github.com/borisskert)

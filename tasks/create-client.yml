@@ -73,9 +73,17 @@
   template:
     src: client.ovpn.j2
     dest: "{{ client_ovpn_path }}"
+  when: not (
+    molecule_docker_environment is defined
+    and molecule_docker_environment | bool
+    )
 
 - name: Download client ovpn
   fetch:
     src: "{{ client_ovpn_path }}"
     dest: "{{ client_ovpn_download_path }}"
     flat: true
+  when: not (
+    molecule_docker_environment is defined
+    and molecule_docker_environment | bool
+    )

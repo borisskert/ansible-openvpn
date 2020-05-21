@@ -18,3 +18,7 @@
   changed_when: openvpn_service.changed
     or openvpn_service.status.SubState != 'running'
   notify: Start openvpn service
+  when: not (
+    molecule_docker_environment is defined
+    and molecule_docker_environment | bool
+    )

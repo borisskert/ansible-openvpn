@@ -1,0 +1,50 @@
+---
+dependency:
+  name: galaxy
+  options:
+    role-file: ./molecule/shared/requirements.yml
+
+driver:
+  name: vagrant
+  provider:
+    name: virtualbox
+
+platforms:
+  - name: ansible-openvpn-xenial
+    box: ubuntu/xenial64
+  - name: ansible-openvpn-bionic
+    box: ubuntu/bionic64
+  - name: ansible-openvpn-focal
+    box: ubuntu/focal64
+  - name: ansible-openvpn-stretch
+    box: debian/stretch64
+    groups:
+      - debian
+  - name: ansible-openvpn-buster
+    box: debian/buster64
+    groups:
+      - debian
+
+provisioner:
+  name: ansible
+  playbooks:
+    prepare: ../shared/prepare.yml
+    converge: ../shared/converge.yml
+  inventory:
+    group_vars:
+      debian:
+        ansible_python_interpreter: /usr/bin/python3
+    host_vars:
+      ansible-openvpn-stretch:
+        clients_dir: vagrant-openvpn-stretch
+      ansible-openvpn-buster:
+        clients_dir: vagrant-openvpn-buster
+      ansible-openvpn-focal:
+        clients_dir: vagrant-openvpn-focal
+      ansible-openvpn-bionic:
+        clients_dir: vagrant-openvpn-bionic
+      ansible-openvpn-xenial:
+        clients_dir: vagrant-openvpn-xenial
+
+verifier:
+  name: ansible

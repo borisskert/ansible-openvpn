@@ -1,6 +1,0 @@
-*.retry
-.vagrant
-roles/
-*.log
-clients/
-.DS_Store

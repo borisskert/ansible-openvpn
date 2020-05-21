@@ -1,0 +1,60 @@
+---
+- name: Verify
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Should create openvpn server config
+      stat:
+        path: /srv/openvpn/config/openvpn.conf
+        checksum_algorithm: sha256
+      register: server_config
+      # Expecting file to have content:
+      #  See ../shared/expected.openvpn.conf
+      failed_when: not (
+        server_config.stat.exists
+        and server_config.stat.checksum
+        == '5f4f7970aa5c6e265db8c04e490fa7ad7c3194f0cbbbd831822913ab7ccfd401'
+        )
+
+    - name: Should template Dockerfile
+      stat:
+        path: /opt/openvpn/docker/Dockerfile
+        checksum_algorithm: sha256
+      register: docker_file
+      # Expecting file to have content:
+      #  FROM alpine:3.11
+      #
+      #  MAINTAINER borisskert <boris.skert@gmail.com>
+      #
+      #  RUN adduser -DHs /sbin/nologin -u 3001 openvpnuser && \
+      #  apk --no-cache --no-progress upgrade && \
+      #  apk --no-cache --no-progress add \
+      #  openvpn~=2.4.8
+      #
+      #  RUN mkdir /usr/share/openvpn && \
+      #  cp /etc/openvpn/* /usr/share/openvpn/
+      #
+      #  VOLUME ["/etc/openvpn", "/var/log/openvpn/"]
+      #
+      #  EXPOSE 1194/udp
+      #
+      #  ENTRYPOINT ["openvpn"]
+      failed_when: not (
+        docker_file.stat.exists
+        and docker_file.stat.checksum
+        == '383453677003c61cbb242ea8eeb814b225b4414661829a1e9f7806f24d36de00'
+        )
+
+    - name: Should create docker image
+      docker_image:
+        name: local/openvpn:2.4.8
+        source: local
+        state: present
+
+  post_tasks:
+    - name: Delete docker image
+      docker_image:
+        name: local/openvpn:2.4.8
+        state: absent
+      failed_when: false
