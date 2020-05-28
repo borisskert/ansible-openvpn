@@ -1,27 +1,11 @@
 ---
-- name: Reload systemd
-  systemd:
-    daemon_reload: true
-  when: not (
-    molecule_docker_environment is defined
-    and molecule_docker_environment | bool
-    )
-
-- name: Start openvpn service
-  service:
-    name: "{{ service_name }}"
-    state: started
-  register: openvpn_service_start
-
 - name: Restart openvpn service
-  service:
+  systemd:
     name: "{{ service_name }}"
     state: restarted
+    enabled: true
+    daemon_reload: true
   when: not (
-    openvpn_service_start is defined
-    and openvpn_service_start.changed
-    )
-    and not (
     molecule_docker_environment is defined
     and molecule_docker_environment | bool
     )

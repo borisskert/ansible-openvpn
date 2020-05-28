@@ -7,18 +7,4 @@
     group: root
     mode: 0644
   notify:
-    - Reload systemd
     - Restart openvpn service
-
-- name: Enable service
-  service:
-    name: "{{ service_name }}"
-    enabled: true
-  register: openvpn_service
-  changed_when: openvpn_service.changed
-    or openvpn_service.status.SubState != 'running'
-  notify: Start openvpn service
-  when: not (
-    molecule_docker_environment is defined
-    and molecule_docker_environment | bool
-    )
