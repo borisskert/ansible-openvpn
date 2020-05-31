@@ -1,7 +1,7 @@
 ---
 - name: Create CA directory
   file:
-    path: "{{ ca_directory }}"
+    path: "{{ openvpn_ca_directory }}"
     state: directory
     owner: "{{ openvpn_user_uid }}"
     group: "{{ openvpn_user_uid }}"
@@ -10,22 +10,22 @@
 - name: Generate the OpenSSL RSA private key
     for Certificate Authority
   openssl_privatekey:
-    path: "{{ ca_private_key_path }}"
-    size: "{{ ca_key_size }}"
+    path: "{{ openvpn_ca_private_key_path }}"
+    size: "{{ openvpn_ca_key_size }}"
     owner: "{{ openvpn_user_uid }}"
     group: "{{ openvpn_user_uid }}"
 
 - name: Generate the OpenSSL Certificate Signing Request
     for Certificate Authority
   openssl_csr:
-    path: "{{ ca_csr_path }}"
-    privatekey_path: "{{ ca_private_key_path }}"
-    common_name: "{{ ca_common_name }}"
-    country_name: "{{ ca_country_name }}"
-    state_or_province_name: "{{ ca_state_or_province_name }}"
-    locality_name: "{{ ca_locality_name }}"
-    organization_name: "{{ ca_organization_name }}"
-    organizational_unit_name: "{{ ca_organizational_unit_name }}"
+    path: "{{ openvpn_ca_csr_path }}"
+    privatekey_path: "{{ openvpn_ca_private_key_path }}"
+    common_name: "{{ openvpn_ca_common_name }}"
+    country_name: "{{ openvpn_ca_country_name }}"
+    state_or_province_name: "{{ openvpn_ca_state_or_province_name }}"
+    locality_name: "{{ openvpn_ca_locality_name }}"
+    organization_name: "{{ openvpn_ca_organization_name }}"
+    organizational_unit_name: "{{ openvpn_ca_organizational_unit_name }}"
     key_usage:
       - cRLSign
       - keyCertSign
@@ -34,14 +34,14 @@
 
 - name: Generate Certificate for Certificate Authority
   openssl_certificate:
-    path: "{{ ca_cert_path }}"
-    privatekey_path: "{{ ca_private_key_path }}"
-    csr_path: "{{ ca_csr_path }}"
+    path: "{{ openvpn_ca_cert_path }}"
+    privatekey_path: "{{ openvpn_ca_private_key_path }}"
+    csr_path: "{{ openvpn_ca_csr_path }}"
     provider: selfsigned
     owner: "{{ openvpn_user_uid }}"
     group: "{{ openvpn_user_uid }}"
 
 - name: Read CA Certificate
   slurp:
-    src: "{{ ca_cert_path }}"
+    src: "{{ openvpn_ca_cert_path }}"
   register: ca_cert

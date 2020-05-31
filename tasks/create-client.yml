@@ -2,23 +2,26 @@
 - name: Setup variables for Cert
   set_fact:
     client_private_key_path:
-      "{{ client_keys_directory }}/{{ item.name }}.key.pem"
-    client_csr_path: "{{ client_csr_directory }}/{{ item.name }}.csr.pem"
-    client_cert_path: "{{ client_certs_directory }}/{{ item.name }}.cert.pem"
-    client_ovpn_path: "{{ client_config_directory }}/{{ item.name }}.ovpn"
-    client_ovpn_download_path: "{{ download_dir }}/{{ item.name }}.ovpn"
+      "{{ openvpn_client_keys_directory }}/{{ item.name }}.key.pem"
+    client_csr_path:
+      "{{ openvpn_client_csr_directory }}/{{ item.name }}.csr.pem"
+    client_cert_path:
+      "{{ openvpn_client_certs_directory }}/{{ item.name }}.cert.pem"
+    client_ovpn_path:
+      "{{ openvpn_client_config_directory }}/{{ item.name }}.ovpn"
+    client_ovpn_download_path: "{{ openvpn_download_dir }}/{{ item.name }}.ovpn"
 
 - name: Generate OpenSSL RSA private key for client
   openssl_privatekey:
     path: "{{ client_private_key_path }}"
-    size: "{{ client_cert_size }}"
+    size: "{{ openvpn_client_cert_size }}"
   when: item.passphrase is not defined
     or item.passphrase | length < 1
 
 - name: Generate encrypted OpenSSL RSA private key for client
   openssl_privatekey:
     path: "{{ client_private_key_path }}"
-    size: "{{ client_cert_size }}"
+    size: "{{ openvpn_client_cert_size }}"
     passphrase: "{{ item.passphrase }}"
     cipher: auto
   when: item.passphrase is defined
@@ -55,8 +58,8 @@
   openssl_certificate:
     path: "{{ client_cert_path }}"
     csr_path: "{{ client_csr_path }}"
-    ownca_path: "{{ ca_cert_path }}"
-    ownca_privatekey_path: "{{ ca_private_key_path }}"
+    ownca_path: "{{ openvpn_ca_cert_path }}"
+    ownca_privatekey_path: "{{ openvpn_ca_private_key_path }}"
     provider: ownca
 
 - name: Read client key

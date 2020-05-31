@@ -1,7 +1,7 @@
 ---
 - name: Create log volume
   file:
-    path: "{{ log_volume }}"
+    path: "{{ openvpn_log_volume }}"
     state: directory
     owner: "{{ openvpn_user_uid }}"
     group: "{{ openvpn_user_uid }}"

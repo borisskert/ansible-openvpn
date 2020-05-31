@@ -1,7 +1,7 @@
-{% if alpine_version is not defined or alpine_version == 'latest' %}
+{% if openvpn_alpine_version is not defined or openvpn_alpine_version == 'latest' %}
 FROM alpine
 {% else %}
-FROM alpine:{{alpine_version}}
+FROM alpine:{{openvpn_alpine_version}}
 {% endif %}
 
 MAINTAINER borisskert <boris.skert@gmail.com>

@@ -7,27 +7,27 @@ After=docker.service
 Requires=docker.service
 
 [Service]
-ExecStartPre=-/usr/bin/docker rm -f {{container_name}}
-ExecStartPre=/usr/bin/docker build --tag {{image_name}}:{{openvpn_version}} {{docker_working_directory}}
+ExecStartPre=-/usr/bin/docker rm -f {{openvpn_container_name}}
+ExecStartPre=/usr/bin/docker build --tag {{openvpn_image_name}}:{{openvpn_version}} {{openvpn_docker_working_directory}}
 
-ExecStart=/usr/bin/docker run --name {{container_name}} \
-            --volume {{ca_cert_path}}:/etc/openvpn/keys/ca.crt:ro \
-            --volume {{server_cert_path}}:/etc/openvpn/keys/Server.crt:ro \
-            --volume {{server_private_key_path}}:/etc/openvpn/keys/Server.key:ro \
-            --volume {{dh_parameter_path}}:/etc/openvpn/keys/dh.pem:ro \
-            --volume {{tls_auth_path}}:/etc/openvpn/keys/tls-auth.key:ro \
-            --volume {{config_volume}}:/etc/openvpn \
-            --volume {{log_volume}}:/var/log/openvpn \
+ExecStart=/usr/bin/docker run --name {{openvpn_container_name}} \
+            --volume {{openvpn_ca_cert_path}}:/etc/openvpn/keys/ca.crt:ro \
+            --volume {{openvpn_server_cert_path}}:/etc/openvpn/keys/Server.crt:ro \
+            --volume {{openvpn_server_private_key_path}}:/etc/openvpn/keys/Server.key:ro \
+            --volume {{openvpn_dh_parameter_path}}:/etc/openvpn/keys/dh.pem:ro \
+            --volume {{openvpn_tls_auth_path}}:/etc/openvpn/keys/tls-auth.key:ro \
+            --volume {{openvpn_config_volume}}:/etc/openvpn \
+            --volume {{openvpn_log_volume}}:/var/log/openvpn \
             --volume /etc/resolv.conf:/etc/resolv.conf \
             --net=host \
             --cap-add=NET_ADMIN \
             --device /dev/net/tun \
             --tmpfs /tmp \
-            {{image_name}}:{{openvpn_version}} \
+            {{openvpn_image_name}}:{{openvpn_version}} \
             --config /etc/openvpn/openvpn.conf
 
-ExecStop=-/usr/bin/docker stop {{container_name}}
-ExecStopPost=-/usr/bin/docker rm -f {{container_name}}
+ExecStop=-/usr/bin/docker stop {{openvpn_container_name}}
+ExecStopPost=-/usr/bin/docker rm -f {{openvpn_container_name}}
 
 Restart=always
 RestartSec=60s

@@ -1,49 +1,49 @@
 ---
-- name: Check 'ca_country_name' parameter
+- name: Check 'openvpn_ca_country_name' parameter
   assert:
     that:
-      - "ca_country_name is defined"
-      - "ca_country_name | length > 0"
-    fail_msg: "parameter 'ca_country_name' is missing"
+      - "openvpn_ca_country_name is defined"
+      - "openvpn_ca_country_name | length > 0"
+    fail_msg: "parameter 'openvpn_ca_country_name' is missing"
 
-- name: Check 'ca_state_or_province_name' parameter
+- name: Check 'openvpn_ca_state_or_province_name' parameter
   assert:
     that:
-      - "ca_state_or_province_name is defined"
-      - "ca_state_or_province_name | length > 0"
-    fail_msg: "parameter 'ca_state_or_province_name' is missing"
+      - "openvpn_ca_state_or_province_name is defined"
+      - "openvpn_ca_state_or_province_name | length > 0"
+    fail_msg: "parameter 'openvpn_ca_state_or_province_name' is missing"
 
-- name: Check 'ca_locality_name' parameter
+- name: Check 'openvpn_ca_locality_name' parameter
   assert:
     that:
-      - "ca_locality_name is defined"
-      - "ca_locality_name | length > 0"
-    fail_msg: "parameter 'ca_locality_name' is missing"
+      - "openvpn_ca_locality_name is defined"
+      - "openvpn_ca_locality_name | length > 0"
+    fail_msg: "parameter 'openvpn_ca_locality_name' is missing"
 
-- name: Check 'ca_organization_name' parameter
+- name: Check 'openvpn_ca_organization_name' parameter
   assert:
     that:
-      - "ca_organization_name is defined"
-      - "ca_organization_name | length > 0"
-    fail_msg: "parameter 'ca_organization_name' is missing"
+      - "openvpn_ca_organization_name is defined"
+      - "openvpn_ca_organization_name | length > 0"
+    fail_msg: "parameter 'openvpn_ca_organization_name' is missing"
 
-- name: Check 'ca_email_address' parameter
+- name: Check 'openvpn_ca_email_address' parameter
   assert:
     that:
-      - "ca_email_address is defined"
-      - "ca_email_address | length > 0"
-    fail_msg: "parameter 'ca_email_address' is missing"
+      - "openvpn_ca_email_address is defined"
+      - "openvpn_ca_email_address | length > 0"
+    fail_msg: "parameter 'openvpn_ca_email_address' is missing"
 
-- name: Check 'ca_organizational_unit_name' parameter
+- name: Check 'openvpn_ca_organizational_unit_name' parameter
   assert:
     that:
-      - "ca_organizational_unit_name is defined"
-      - "ca_organizational_unit_name | length > 0"
-    fail_msg: "parameter 'ca_organizational_unit_name' is missing"
+      - "openvpn_ca_organizational_unit_name is defined"
+      - "openvpn_ca_organizational_unit_name | length > 0"
+    fail_msg: "parameter 'openvpn_ca_organizational_unit_name' is missing"
 
-- name: Check 'ca_common_name' parameter
+- name: Check 'openvpn_ca_common_name' parameter
   assert:
     that:
-      - "ca_common_name is defined"
-      - "ca_common_name | length > 0"
-    fail_msg: "parameter 'ca_common_name' is missing"
+      - "openvpn_ca_common_name is defined"
+      - "openvpn_ca_common_name | length > 0"
+    fail_msg: "parameter 'openvpn_ca_common_name' is missing"

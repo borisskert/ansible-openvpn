@@ -25,31 +25,31 @@ Configure and install on OpenVPN server as docker container running as systemd s
 
 | Variable       | Type | Mandatory? | Default | Description                  |
 |----------------|------|------------|---------|------------------------------|
-| alpine_version | text | no         | `latest`  | Your selected alpine version |
+| openvpn_alpine_version | text | no         | `latest`  | Your selected alpine version |
 | openvpn_version | text | no        | `latest`  | Your selected OpenVPN-Server version |
-| ca_key_size     | number     | no    | 2048    | Keysize of the Certificate Authority |
-| server_key_size | number     | no    | 2048    | Keysize of the server certificate |
-| dh_parameter_size | number   | no    | 1024    | Size of the Diffie-Hellman parameter |
-| ca_country_name   | text     | yes   |         | Certificate authority country code (i.e. `US`) |
-| ca_locality_name  | text     | yes   |         | Certificate authority locality (i.e. `San Francisco`) |
-| ca_state_or_province_name | text | yes |       | Certificate authority state or province (i.e. `CA`) |
-| ca_email_address          | text | yes |       | Certificate authority email address (i.e. `me@myhost.mydomain.org`) |
-| ca_common_name            | text | yes |       | Certificate authority common name (i.e. `mydomain.org`) |
-| ca_organization_name      | text | yes |       | Certificate authority organization name (i.e. `Fort-Funston`) |
-| ca_organizational_unit_name | text | yes |     | Certificate authority organizational unit name (i.e. `IT Division`) |
-| server_common_name          | text | yes |     | Common name of the server certificate |
-| server_address              | text | yes |     | The external server address (seen by clients) |
-| clients                     | array of `client` | no | [] | A list of clients. For each client a client config in `ovpn` format will be created and downloaded to your local directory defined in `download_dir` |
-| download_dir                | text              | no | `./clients` | Your local directory the created client `ovpn` configuration files will be downloaded |
-| tls_version_min             | text              | no | `1.2` | Option to enforce a minimum TLS version |
-| verbosity                   | number            | no | `3` | The verbosity level of your OpenVPN server |
-| server_ip                   | ip address        | no | `10.0.0.1` | OpenVPN server ip address within the vpn net |
-| network_ip                  | ip address        | no | `10.0.0.0` | OpenVPN network address |
-| subnet_mask                 | subnet mask       | no | `255.255.0.0` | OpenVPN subnet mask |
-| routes                      | array of text     | no | [] | Used routes configured in OpenVPN server |
-| pushes                      | array of text     | no | [] | Rules pushed to the OpenVPN clients |
-| network_device              | text              | no | `tun` | The used OpenVPN device |
-| network_protocol            | text              | no | `udp` | The used OpenVPN protocol |
+| openvpn_ca_key_size     | number     | no    | 2048    | Keysize of the Certificate Authority |
+| openvpn_server_key_size | number     | no    | 2048    | Keysize of the server certificate |
+| openvpn_dh_parameter_size | number   | no    | 1024    | Size of the Diffie-Hellman parameter |
+| openvpn_ca_country_name   | text     | yes   |         | Certificate authority country code (i.e. `US`) |
+| openvpn_ca_locality_name  | text     | yes   |         | Certificate authority locality (i.e. `San Francisco`) |
+| openvpn_ca_state_or_province_name | text | yes |       | Certificate authority state or province (i.e. `CA`) |
+| openvpn_ca_email_address          | text | yes |       | Certificate authority email address (i.e. `me@myhost.mydomain.org`) |
+| openvpn_ca_common_name            | text | yes |       | Certificate authority common name (i.e. `mydomain.org`) |
+| openvpn_ca_organization_name      | text | yes |       | Certificate authority organization name (i.e. `Fort-Funston`) |
+| openvpn_ca_organizational_unit_name | text | yes |     | Certificate authority organizational unit name (i.e. `IT Division`) |
+| openvpn_server_common_name          | text | yes |     | Common name of the server certificate |
+| openvpn_server_address              | text | yes |     | The external server address (seen by clients) |
+| openvpn_clients                     | array of `client` | no | [] | A list of clients. For each client a client config in `ovpn` format will be created and downloaded to your local directory defined in `openvpn_download_dir` |
+| openvpn_download_dir                | text              | no | `./clients` | Your local directory the created client `ovpn` configuration files will be downloaded |
+| openvpn_tls_version_min             | text              | no | `1.2` | Option to enforce a minimum TLS version |
+| openvpn_verbosity                   | number            | no | `3` | The verbosity level of your OpenVPN server |
+| openvpn_server_ip                   | ip address        | no | `10.0.0.1` | OpenVPN server ip address within the vpn net |
+| openvpn_network_ip                  | ip address        | no | `10.0.0.0` | OpenVPN network address |
+| openvpn_subnet_mask                 | subnet mask       | no | `255.255.0.0` | OpenVPN subnet mask |
+| openvpn_routes                      | array of text     | no | [] | Used routes configured in OpenVPN server |
+| openvpn_pushes                      | array of text     | no | [] | Rules pushed to the OpenVPN clients |
+| openvpn_network_device              | text              | no | `tun` | The used OpenVPN device |
+| openvpn_network_protocol            | text              | no | `udp` | The used OpenVPN protocol |
 
 ### `client` definition
 
@@ -76,16 +76,16 @@ Configure and install on OpenVPN server as docker container running as systemd s
 
   roles:
     - role: install-openvpn
-      working_directory: /srv/openvpn
-      ca_common_name: mydomain.org
-      ca_country_name: US
-      ca_state_or_province_name: CA
-      ca_locality_name: San Francisco
-      ca_organization_name: Fort-Funston
-      ca_email_address: me@mydomain.org
-      ca_organizational_unit_name: IT Division
-      server_common_name: openvpn.mydomain.org
-      server_address: 192.168.33.61
+      openvpn_working_directory: /srv/openvpn
+      openvpn_ca_common_name: mydomain.org
+      openvpn_ca_country_name: US
+      openvpn_ca_state_or_province_name: CA
+      openvpn_ca_locality_name: San Francisco
+      openvpn_ca_organization_name: Fort-Funston
+      openvpn_ca_email_address: me@mydomain.org
+      openvpn_ca_organizational_unit_name: IT Division
+      openvpn_server_common_name: openvpn.mydomain.org
+      openvpn_server_address: 192.168.33.61
 ```
 
 ### Typical `playbook.yml`
@@ -96,32 +96,32 @@ Configure and install on OpenVPN server as docker container running as systemd s
 
   roles:
     - role: install-openvpn
-      alpine_version: 3.11.6
+      openvpn_alpine_version: 3.11.6
       openvpn_version: 2.4.8-r1
-      working_directory: /srv/openvpn
-      ca_common_name: mydomain.org
-      ca_country_name: US
-      ca_state_or_province_name: CA
-      ca_locality_name: San Francisco
-      ca_organization_name: Fort-Funston
-      ca_email_address: me@mydomain.org
-      ca_organizational_unit_name: IT Division
-      server_common_name: openvpn.mydomain.org
-      server_address: 192.168.33.61
-      ca_key_size: 4096
-      server_key_size: 4096
-      dh_parameter_size: 4096
-      client_cert_size: 4096
-      download_dir: ~/my-ovpn-clients
-      tls_version_min: 1.3
-      server_ip: 10.0.0.1
-      network_ip: 10.0.0.0
-      subnet_mask: 255.255.0.0
-      pushes:
+      openvpn_working_directory: /srv/openvpn
+      openvpn_ca_common_name: mydomain.org
+      openvpn_ca_country_name: US
+      openvpn_ca_state_or_province_name: CA
+      openvpn_ca_locality_name: San Francisco
+      openvpn_ca_organization_name: Fort-Funston
+      openvpn_ca_email_address: me@mydomain.org
+      openvpn_ca_organizational_unit_name: IT Division
+      openvpn_server_common_name: openvpn.mydomain.org
+      openvpn_server_address: 192.168.33.61
+      openvpn_ca_key_size: 4096
+      openvpn_server_key_size: 4096
+      openvpn_dh_parameter_size: 4096
+      openvpn_client_cert_size: 4096
+      openvpn_download_dir: ~/my-ovpn-clients
+      openvpn_tls_version_min: 1.3
+      openvpn_server_ip: 10.0.0.1
+      openvpn_network_ip: 10.0.0.0
+      openvpn_subnet_mask: 255.255.0.0
+      openvpn_pushes:
         - dhcp-option DNS 192.168.33.1
-      network_device: tun
-      network_protocol: udp
-      clients:
+      openvpn_network_device: tun
+      openvpn_network_protocol: udp
+      openvpn_clients:
         - name: vpnclient01
           passphrase: abc
         - name: vpnclient02

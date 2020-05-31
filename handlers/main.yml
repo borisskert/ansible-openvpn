@@ -1,7 +1,7 @@
 ---
 - name: Restart openvpn service
   systemd:
-    name: "{{ service_name }}"
+    name: "{{ openvpn_service_name }}"
     state: restarted
     enabled: true
     daemon_reload: true

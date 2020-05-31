@@ -2,94 +2,94 @@
 # ----------------------------------------------------------------------------------------------------------------------
 # Server certificate properties
 # ----------------------------------------------------------------------------------------------------------------------
-ca_key_size: 2048
-ca_locality_name: ''
-ca_country_name: ''
-ca_state_or_province_name: ''
-ca_email_address: ''
-ca_common_name: ''
-ca_organization_name: ''
-ca_organizational_unit_name: ''
+openvpn_ca_key_size: 2048
+openvpn_ca_locality_name: ''
+openvpn_ca_country_name: ''
+openvpn_ca_state_or_province_name: ''
+openvpn_ca_email_address: ''
+openvpn_ca_common_name: ''
+openvpn_ca_organization_name: ''
+openvpn_ca_organizational_unit_name: ''
 
-server_common_name: ''
-server_key_size: 2048
-dh_parameter_size: 1024
+openvpn_server_common_name: ''
+openvpn_server_key_size: 2048
+openvpn_dh_parameter_size: 1024
 
 
 # ----------------------------------------------------------------------------------------------------------------------
 # Client certificate properties
 # ----------------------------------------------------------------------------------------------------------------------
-download_dir: ./clients
-client_cert_size: 2048
-clients: []
+openvpn_download_dir: ./clients
+openvpn_client_cert_size: 2048
+openvpn_clients: []
 
 # ----------------------------------------------------------------------------------------------------------------------
 # Working directories
 # ----------------------------------------------------------------------------------------------------------------------
-working_directory: ''
+openvpn_working_directory: ''
 
-ca_directory: "{{working_directory}}/ca"
-ca_private_key_path: "{{ca_directory}}/ca.pem"
-ca_cert_path: "{{ca_directory}}/ca.crt"
-ca_csr_path: "{{ca_directory}}/ca.csr.pem"
+openvpn_ca_directory: "{{openvpn_working_directory}}/ca"
+openvpn_ca_private_key_path: "{{openvpn_ca_directory}}/ca.pem"
+openvpn_ca_cert_path: "{{openvpn_ca_directory}}/ca.crt"
+openvpn_ca_csr_path: "{{openvpn_ca_directory}}/ca.csr.pem"
 
-server_keys_directory: "{{working_directory}}/server-keys"
-server_private_key_path: "{{server_keys_directory}}/server.pem"
-server_csr_path: "{{server_keys_directory}}/server.csr"
-server_cert_path: "{{server_keys_directory}}/server.crt"
-tls_auth_path: "{{server_keys_directory}}/tls/tls-auth.key"
+openvpn_server_keys_directory: "{{openvpn_working_directory}}/server-keys"
+openvpn_server_private_key_path: "{{openvpn_server_keys_directory}}/server.pem"
+openvpn_server_csr_path: "{{openvpn_server_keys_directory}}/server.csr"
+openvpn_server_cert_path: "{{openvpn_server_keys_directory}}/server.crt"
+openvpn_tls_auth_path: "{{openvpn_server_keys_directory}}/tls/tls-auth.key"
 
-dh_parameter_path: "{{server_keys_directory}}/dh.pem"
-clear_dh_parameter: false
+openvpn_dh_parameter_path: "{{openvpn_server_keys_directory}}/dh.pem"
+openvpn_clear_dh_parameter: false
 
-config_volume: "{{working_directory}}/config"
-log_volume: /var/log/openvpn
+openvpn_config_volume: "{{openvpn_working_directory}}/config"
+openvpn_log_volume: /var/log/openvpn
 
-client_keys_directory: "{{working_directory}}/clients/private"
-client_csr_directory: "{{working_directory}}/clients/csr"
-client_certs_directory: "{{working_directory}}/clients/certs"
-client_config_directory: "{{working_directory}}/clients/configs"
+openvpn_client_keys_directory: "{{openvpn_working_directory}}/clients/private"
+openvpn_client_csr_directory: "{{openvpn_working_directory}}/clients/csr"
+openvpn_client_certs_directory: "{{openvpn_working_directory}}/clients/certs"
+openvpn_client_config_directory: "{{openvpn_working_directory}}/clients/configs"
 
 
 # ----------------------------------------------------------------------------------------------------------------------
 # Client settings
 # ----------------------------------------------------------------------------------------------------------------------
-server_address: ''
-server_port: 1194
-tls_version_min: 1.2
+openvpn_server_address: ''
+openvpn_server_port: 1194
+openvpn_tls_version_min: 1.2
 
 
 # ----------------------------------------------------------------------------------------------------------------------
 # docker image properties
 # ----------------------------------------------------------------------------------------------------------------------
-docker_working_directory: /opt/openvpn/docker
+openvpn_docker_working_directory: /opt/openvpn/docker
 
-alpine_version: latest
+openvpn_alpine_version: latest
 openvpn_version: latest
-image_name: local/openvpn
-force_build: false
+openvpn_image_name: local/openvpn
+openvpn_force_build: false
 
 
 # ----------------------------------------------------------------------------------------------------------------------
 # Service properties
 # ----------------------------------------------------------------------------------------------------------------------
-service_name: openvpn
-container_name: "{{service_name}}.service"
+openvpn_service_name: openvpn
+openvpn_container_name: "{{openvpn_service_name}}.service"
 
 
 # ----------------------------------------------------------------------------------------------------------------------
 # Other properties
 # ----------------------------------------------------------------------------------------------------------------------
 openvpn_user_uid: '3001'
-verbosity: 3
+openvpn_verbosity: 3
 
 # ----------------------------------------------------------------------------------------------------------------------
 # Network properties
 # ----------------------------------------------------------------------------------------------------------------------
-server_ip: 10.0.0.1
-network_ip: 10.0.0.0
-subnet_mask: 255.255.0.0
-routes: []
-pushes: []
-network_device: tun
-network_protocol: udp
+openvpn_server_ip: 10.0.0.1
+openvpn_network_ip: 10.0.0.0
+openvpn_subnet_mask: 255.255.0.0
+openvpn_routes: []
+openvpn_pushes: []
+openvpn_network_device: tun
+openvpn_network_protocol: udp

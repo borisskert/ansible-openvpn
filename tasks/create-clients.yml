@@ -1,7 +1,7 @@
 ---
 - name: Create client certs directory
   file:
-    path: "{{ client_certs_directory }}"
+    path: "{{ openvpn_client_certs_directory }}"
     state: directory
     owner: root
     group: root
@@ -9,7 +9,7 @@
 
 - name: Create client keys directory
   file:
-    path: "{{ client_keys_directory }}"
+    path: "{{ openvpn_client_keys_directory }}"
     state: directory
     owner: root
     group: root
@@ -17,7 +17,7 @@
 
 - name: Create client csr directory
   file:
-    path: "{{ client_csr_directory }}"
+    path: "{{ openvpn_client_csr_directory }}"
     state: directory
     owner: root
     group: root
@@ -25,11 +25,11 @@
 
 - name: Create client configs directory
   file:
-    path: "{{ client_config_directory }}"
+    path: "{{ openvpn_client_config_directory }}"
     state: directory
     owner: root
     group: root
     mode: 0700
 
 - include: create-client.yml
-  with_items: "{{ clients }}"
+  with_items: "{{ openvpn_clients }}"

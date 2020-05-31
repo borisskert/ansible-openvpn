@@ -16,7 +16,7 @@
 
 - name: Start openvpn service (if not started)
   service:
-    name: "{{ service_name }}"
+    name: "{{ openvpn_service_name }}"
     enabled: true
     state: started
   when: not (

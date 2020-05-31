@@ -4,9 +4,9 @@ client
 
     # Connection  #
 #------------------------------------------------
-dev {{network_device}}
-proto {{network_protocol}}
-remote {{server_address}} {{server_port}}
+dev {{openvpn_network_device}}
+proto {{openvpn_network_protocol}}
+remote {{openvpn_server_address}} {{openvpn_server_port}}
 
     # Speed #
 #------------------------------------------------
@@ -35,7 +35,7 @@ cipher AES-256-CBC
 #------------------------------------------------
 tls-client
 remote-cert-tls server
-tls-version-min {{tls_version_min}}
+tls-version-min {{openvpn_tls_version_min}}
 tls-cipher DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-CAMELLIA256-SHA:DHE-RSA-AES256-SHA:DHE-RSA-CAMELLIA128-SHA:DHE-RSA-AES128-SHA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA
 
     # Logging #

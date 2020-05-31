@@ -1,7 +1,7 @@
 ---
 - name: Create server keys directory
   file:
-    path: "{{ server_keys_directory }}"
+    path: "{{ openvpn_server_keys_directory }}"
     state: directory
     owner: "{{ openvpn_user_uid }}"
     group: "{{ openvpn_user_uid }}"
@@ -9,16 +9,16 @@
 
 - name: Generate the OpenSSL RSA private key for Server
   openssl_privatekey:
-    path: "{{ server_private_key_path }}"
-    size: "{{ server_key_size }}"
+    path: "{{ openvpn_server_private_key_path }}"
+    size: "{{ openvpn_server_key_size }}"
     owner: "{{ openvpn_user_uid }}"
     group: "{{ openvpn_user_uid }}"
 
 - name: Generate the OpenSSL Certificate Signing Request for Server
   openssl_csr:
-    path: "{{ server_csr_path }}"
-    privatekey_path: "{{ server_private_key_path }}"
-    common_name: "{{ server_common_name }}"
+    path: "{{ openvpn_server_csr_path }}"
+    privatekey_path: "{{ openvpn_server_private_key_path }}"
+    common_name: "{{ openvpn_server_common_name }}"
     key_usage:
       - digitalSignature
       - keyAgreement
@@ -29,10 +29,10 @@
 
 - name: Generate Certificate for Server
   openssl_certificate:
-    path: "{{ server_cert_path }}"
-    csr_path: "{{ server_csr_path }}"
-    ownca_path: "{{ ca_cert_path }}"
-    ownca_privatekey_path: "{{ ca_private_key_path }}"
+    path: "{{ openvpn_server_cert_path }}"
+    csr_path: "{{ openvpn_server_csr_path }}"
+    ownca_path: "{{ openvpn_ca_cert_path }}"
+    ownca_privatekey_path: "{{ openvpn_ca_private_key_path }}"
     provider: ownca
     owner: "{{ openvpn_user_uid }}"
     group: "{{ openvpn_user_uid }}"

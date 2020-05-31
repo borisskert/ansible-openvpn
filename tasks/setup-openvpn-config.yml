@@ -1,7 +1,7 @@
 ---
 - name: Create config volume
   file:
-    path: "{{ config_volume }}"
+    path: "{{ openvpn_config_volume }}"
     state: directory
     owner: root
     group: root
@@ -10,7 +10,7 @@
 - name: Template server config
   template:
     src: openvpn.conf.j2
-    dest: "{{ config_volume }}/openvpn.conf"
+    dest: "{{ openvpn_config_volume }}/openvpn.conf"
     owner: root
     group: root
     mode: 0644
