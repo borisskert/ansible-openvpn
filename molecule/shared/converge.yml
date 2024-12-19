@@ -5,8 +5,8 @@
 
   roles:
     - role: ansible-openvpn
-      openvpn_alpine_version: '3.11'
-      openvpn_version: 2.4.8
+      openvpn_alpine_version: '3.21'
+      openvpn_version: 2.6.12
       openvpn_working_directory: /srv/openvpn
       openvpn_ca_common_name: mydomain.org
       openvpn_ca_country_name: US
@@ -19,7 +19,7 @@
       openvpn_server_address: vpn.mydomain.org
       openvpn_ca_key_size: 2048
       openvpn_server_key_size: 2048
-      openvpn_dh_parameter_size: 1024
+      openvpn_dh_parameter_size: 2048
       openvpn_client_cert_size: 2048
       openvpn_download_dir: "./.tmp/{{ clients_dir }}"
       openvpn_tls_version_min: 1.3

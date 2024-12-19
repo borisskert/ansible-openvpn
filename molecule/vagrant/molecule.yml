@@ -10,18 +10,18 @@ driver:
     name: virtualbox
 
 platforms:
-  - name: ansible-openvpn-xenial
-    box: ubuntu/xenial64
-  - name: ansible-openvpn-bionic
-    box: ubuntu/bionic64
+  - name: ansible-openvpn-noble
+    box: cloud-image/ubuntu-24.04
+  - name: ansible-openvpn-jammy
+    box: cloud-image/ubuntu-22.04
   - name: ansible-openvpn-focal
-    box: ubuntu/focal64
-  - name: ansible-openvpn-stretch
-    box: debian/stretch64
+    box: cloud-image/ubuntu-20.04
+  - name: ansible-openvpn-bookworm
+    box: cloud-image/debian-12
     groups:
       - debian
-  - name: ansible-openvpn-buster
-    box: debian/buster64
+  - name: ansible-openvpn-bullseye
+    box: cloud-image/debian-11
     groups:
       - debian
 
@@ -35,16 +35,16 @@ provisioner:
       debian:
         ansible_python_interpreter: /usr/bin/python3
     host_vars:
-      ansible-openvpn-stretch:
-        clients_dir: vagrant-openvpn-stretch
-      ansible-openvpn-buster:
-        clients_dir: vagrant-openvpn-buster
+      ansible-openvpn-noble:
+        clients_dir: vagrant-openvpn-noble
+      ansible-openvpn-jammy:
+        clients_dir: vagrant-openvpn-jammy
       ansible-openvpn-focal:
         clients_dir: vagrant-openvpn-focal
-      ansible-openvpn-bionic:
-        clients_dir: vagrant-openvpn-bionic
-      ansible-openvpn-xenial:
-        clients_dir: vagrant-openvpn-xenial
+      ansible-openvpn-bookworm:
+        clients_dir: vagrant-openvpn-bookworm
+      ansible-openvpn-bullseye:
+        clients_dir: vagrant-openvpn-bullseye
 
 verifier:
   name: ansible

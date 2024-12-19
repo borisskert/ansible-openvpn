@@ -13,6 +13,22 @@ driver:
   name: docker
 
 platforms:
+  - name: ansible-openvpn-noble
+    image: docker.io/borisskert/python3:noble
+    pull: true
+    pre_build_image: true
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+    groups:
+      - docker
+  - name: ansible-openvpn-jammy
+    image: docker.io/borisskert/python3:jammy
+    pull: true
+    pre_build_image: true
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+    groups:
+      - docker
   - name: ansible-openvpn-focal
     image: docker.io/borisskert/python3:focal
     pull: true
@@ -21,24 +37,9 @@ platforms:
       - '/var/run/docker.sock:/var/run/docker.sock'
     groups:
       - docker
-  - name: ansible-openvpn-bionic
-    image: docker.io/borisskert/python3:bionic
-    pull: true
-    pre_build_image: true
-    volumes:
-      - '/var/run/docker.sock:/var/run/docker.sock'
-    groups:
-      - docker
-  - name: ansible-openvpn-xenial
-    image: docker.io/borisskert/python3:xenial
-    pull: true
-    pre_build_image: true
-    volumes:
-      - '/var/run/docker.sock:/var/run/docker.sock'
-    groups:
-      - docker
-  - name: ansible-openvpn-buster
-    image: docker.io/borisskert/python3:buster
+
+  - name: ansible-openvpn-bookworm
+    image: docker.io/borisskert/python3:bookworm
     pull: true
     pre_build_image: true
     volumes:
@@ -46,8 +47,8 @@ platforms:
     groups:
       - docker
       - debian
-  - name: ansible-openvpn-stretch
-    image: docker.io/borisskert/python3:stretch
+  - name: ansible-openvpn-bullseye
+    image: docker.io/borisskert/python3:bullseye
     pull: true
     pre_build_image: true
     volumes:
@@ -68,16 +69,16 @@ provisioner:
       debian:
         ansible_python_interpreter: /usr/bin/python3
     host_vars:
-      ansible-openvpn-stretch:
-        clients_dir: docker-openvpn-stretch
-      ansible-openvpn-buster:
-        clients_dir: docker-openvpn-buster
+      ansible-openvpn-noble:
+        clients_dir: docker-openvpn-noble
+      ansible-openvpn-jammy:
+        clients_dir: docker-openvpn-jammy
       ansible-openvpn-focal:
         clients_dir: docker-openvpn-focal
-      ansible-openvpn-bionic:
-        clients_dir: docker-openvpn-bionic
-      ansible-openvpn-xenial:
-        clients_dir: docker-openvpn-xenial
+      ansible-openvpn-bookworm:
+        clients_dir: docker-openvpn-bookworm
+      ansible-openvpn-bullseye:
+        clients_dir: docker-openvpn-bullseye
 
 verifier:
   name: ansible
