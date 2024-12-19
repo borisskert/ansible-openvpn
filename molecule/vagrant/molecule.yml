@@ -3,11 +3,10 @@ dependency:
   name: galaxy
   options:
     role-file: ./molecule/shared/requirements.yml
+    force: true
 
 driver:
   name: vagrant
-  provider:
-    name: virtualbox
 
 platforms:
   - name: ansible-openvpn-noble
