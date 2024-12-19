@@ -1,15 +1,15 @@
 ---
-- include: check-parameters.yml
-- include: install-requirements.yml
-- include: create-certificate-authority.yml
-- include: create-server-certificate.yml
-- include: create_dh_parameter.yml
-- include: setup-openvpn-config.yml
-- include: create-docker-image.yml
-- include: create-tls-auth-parameter.yml
-- include: create-clients.yml
-- include: setup-systemd-service.yml
-- include: setup-logrotate.yml
+- include_tasks: check-parameters.yml
+- include_tasks: install-requirements.yml
+- include_tasks: create-certificate-authority.yml
+- include_tasks: create-server-certificate.yml
+- include_tasks: create_dh_parameter.yml
+- include_tasks: setup-openvpn-config.yml
+- include_tasks: create-docker-image.yml
+- include_tasks: create-tls-auth-parameter.yml
+- include_tasks: create-clients.yml
+- include_tasks: setup-systemd-service.yml
+- include_tasks: setup-logrotate.yml
 
 - name: Start systemd-managed docker containers
   meta: flush_handlers

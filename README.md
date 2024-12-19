@@ -18,7 +18,6 @@ Configure and install on OpenVPN server as docker container running as systemd s
 * Generate Diffie-Hellman parameter
 * Create TLS-Auth Key
 * Create Client certificates (and download them)
-* Build Docker image (based on alpine)
 * Create and enable Systemd service
 
 ## Role parameters
