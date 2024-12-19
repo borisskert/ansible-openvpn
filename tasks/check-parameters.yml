@@ -6,7 +6,7 @@
       - "openvpn_working_directory | length > 0"
     fail_msg: "parameter 'openvpn_working_directory' is missing"
 
-- include: check-ca-parameters.yml
+- include_tasks: check-ca-parameters.yml
 
 - name: Check 'openvpn_server_common_name' parameter
   assert:

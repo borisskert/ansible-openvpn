@@ -4,7 +4,7 @@ FROM alpine
 FROM alpine:{{openvpn_alpine_version}}
 {% endif %}
 
-MAINTAINER borisskert <boris.skert@gmail.com>
+LABEL MAINTAINER="Boris Skert <https://github.com/borisskert/ansible-openvpn>"
 
 RUN adduser -DHs /sbin/nologin -u {{openvpn_user_uid}} openvpnuser && \
     apk --no-cache --no-progress upgrade && \

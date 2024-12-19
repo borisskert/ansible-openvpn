@@ -1,5 +1,7 @@
 ---
-- name: Install python openssl module
-  pip:
-    name: pyopenssl
-    state: present
+- name: Install Python 3 wrappers
+  apt:
+    name:
+      - python3-openssl
+      - python3-docker
+    update_cache: true

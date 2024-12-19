@@ -7,10 +7,6 @@ Configure and install on OpenVPN server as docker container running as systemd s
 * Docker
 * Systemd
 
-## Role requirements
-
-* python-docker package
-
 ## What this role does
 
 * Create Certificate Authority
@@ -23,40 +19,40 @@ Configure and install on OpenVPN server as docker container running as systemd s
 
 ## Role parameters
 
-| Variable       | Type | Mandatory? | Default | Description                  |
-|----------------|------|------------|---------|------------------------------|
-| openvpn_alpine_version | text | no         | `latest`  | Your selected alpine version |
-| openvpn_version | text | no        | `latest`  | Your selected OpenVPN-Server version |
-| openvpn_ca_key_size     | number     | no    | 2048    | Keysize of the Certificate Authority |
-| openvpn_server_key_size | number     | no    | 2048    | Keysize of the server certificate |
-| openvpn_dh_parameter_size | number   | no    | 1024    | Size of the Diffie-Hellman parameter |
-| openvpn_ca_country_name   | text     | yes   |         | Certificate authority country code (i.e. `US`) |
-| openvpn_ca_locality_name  | text     | yes   |         | Certificate authority locality (i.e. `San Francisco`) |
-| openvpn_ca_state_or_province_name | text | yes |       | Certificate authority state or province (i.e. `CA`) |
-| openvpn_ca_email_address          | text | yes |       | Certificate authority email address (i.e. `me@myhost.mydomain.org`) |
-| openvpn_ca_common_name            | text | yes |       | Certificate authority common name (i.e. `mydomain.org`) |
-| openvpn_ca_organization_name      | text | yes |       | Certificate authority organization name (i.e. `Fort-Funston`) |
-| openvpn_ca_organizational_unit_name | text | yes |     | Certificate authority organizational unit name (i.e. `IT Division`) |
-| openvpn_server_common_name          | text | yes |     | Common name of the server certificate |
-| openvpn_server_address              | text | yes |     | The external server address (seen by clients) |
-| openvpn_clients                     | array of `client` | no | [] | A list of clients. For each client a client config in `ovpn` format will be created and downloaded to your local directory defined in `openvpn_download_dir` |
-| openvpn_download_dir                | text              | no | `./clients` | Your local directory the created client `ovpn` configuration files will be downloaded |
-| openvpn_tls_version_min             | text              | no | `1.2` | Option to enforce a minimum TLS version |
-| openvpn_verbosity                   | number            | no | `3` | The verbosity level of your OpenVPN server |
-| openvpn_server_ip                   | ip address        | no | `10.0.0.1` | OpenVPN server ip address within the vpn net |
-| openvpn_network_ip                  | ip address        | no | `10.0.0.0` | OpenVPN network address |
-| openvpn_subnet_mask                 | subnet mask       | no | `255.255.0.0` | OpenVPN subnet mask |
-| openvpn_routes                      | array of text     | no | [] | Used routes configured in OpenVPN server |
-| openvpn_pushes                      | array of text     | no | [] | Rules pushed to the OpenVPN clients |
-| openvpn_network_device              | text              | no | `tun` | The used OpenVPN device |
-| openvpn_network_protocol            | text              | no | `udp` | The used OpenVPN protocol |
+| Variable                            | Type              | Mandatory? | Default       | Description                                                                                                                                                  |
+|-------------------------------------|-------------------|------------|---------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| openvpn_alpine_version              | text              | no         | `latest`      | Your selected alpine version                                                                                                                                 |
+| openvpn_version                     | text              | no         | `latest`      | Your selected OpenVPN-Server version                                                                                                                         |
+| openvpn_ca_key_size                 | number            | no         | 2048          | Keysize of the Certificate Authority                                                                                                                         |
+| openvpn_server_key_size             | number            | no         | 2048          | Keysize of the server certificate                                                                                                                            |
+| openvpn_dh_parameter_size           | number            | no         | 2048          | Size of the Diffie-Hellman parameter                                                                                                                         |
+| openvpn_ca_country_name             | text              | yes        |               | Certificate authority country code (i.e. `US`)                                                                                                               |
+| openvpn_ca_locality_name            | text              | yes        |               | Certificate authority locality (i.e. `San Francisco`)                                                                                                        |
+| openvpn_ca_state_or_province_name   | text              | yes        |               | Certificate authority state or province (i.e. `CA`)                                                                                                          |
+| openvpn_ca_email_address            | text              | yes        |               | Certificate authority email address (i.e. `me@myhost.mydomain.org`)                                                                                          |
+| openvpn_ca_common_name              | text              | yes        |               | Certificate authority common name (i.e. `mydomain.org`)                                                                                                      |
+| openvpn_ca_organization_name        | text              | yes        |               | Certificate authority organization name (i.e. `Fort-Funston`)                                                                                                |
+| openvpn_ca_organizational_unit_name | text              | yes        |               | Certificate authority organizational unit name (i.e. `IT Division`)                                                                                          |
+| openvpn_server_common_name          | text              | yes        |               | Common name of the server certificate                                                                                                                        |
+| openvpn_server_address              | text              | yes        |               | The external server address (seen by clients)                                                                                                                |
+| openvpn_clients                     | array of `client` | no         | []            | A list of clients. For each client a client config in `ovpn` format will be created and downloaded to your local directory defined in `openvpn_download_dir` |
+| openvpn_download_dir                | text              | no         | `./clients`   | Your local directory the created client `ovpn` configuration files will be downloaded                                                                        |
+| openvpn_tls_version_min             | text              | no         | `1.2`         | Option to enforce a minimum TLS version                                                                                                                      |
+| openvpn_verbosity                   | number            | no         | `3`           | The verbosity level of your OpenVPN server                                                                                                                   |
+| openvpn_server_ip                   | ip address        | no         | `10.0.0.1`    | OpenVPN server ip address within the vpn net                                                                                                                 |
+| openvpn_network_ip                  | ip address        | no         | `10.0.0.0`    | OpenVPN network address                                                                                                                                      |
+| openvpn_subnet_mask                 | subnet mask       | no         | `255.255.0.0` | OpenVPN subnet mask                                                                                                                                          |
+| openvpn_routes                      | array of text     | no         | []            | Used routes configured in OpenVPN server                                                                                                                     |
+| openvpn_pushes                      | array of text     | no         | []            | Rules pushed to the OpenVPN clients                                                                                                                          |
+| openvpn_network_device              | text              | no         | `tun`         | The used OpenVPN device                                                                                                                                      |
+| openvpn_network_protocol            | text              | no         | `udp`         | The used OpenVPN protocol                                                                                                                                    |
 
 ### `client` definition
 
-| Variable | Type | Mandatory? | Default | Description                  |
-|----------|------|------------|---------|------------------------------|
-| name     | text | yes        |         | Your client's common name. Used for the corresponding client certificate and `ovpn` filename |
-| passphrase | text | no       |         | The client's private key passphrase                                                          |
+| Variable   | Type | Mandatory? | Default | Description                                                                                  |
+|------------|------|------------|---------|----------------------------------------------------------------------------------------------|
+| name       | text | yes        |         | Your client's common name. Used for the corresponding client certificate and `ovpn` filename |
+| passphrase | text | no         |         | The client's private key passphrase                                                          |
 
 ## Usage
 
@@ -132,7 +128,7 @@ Configure and install on OpenVPN server as docker container running as systemd s
 You need:
 
 * Vagrant
-* VirtualBox
+* libvirt
 * Ansible
 
 Run tests:
@@ -144,7 +140,7 @@ cd tests
 
 ## iptables configuration
 
-By default iptables is blocking your openvpn traffic so you need to configure them.
+By default, iptables is blocking your openvpn traffic so you need to configure them.
 I didn't use ansible to do that.
 
 [Arash Milani](https://arashmilani.com) wrote a [small article](https://arashmilani.com/post?id=53) that helped me a lot.
@@ -188,7 +184,7 @@ iptables -A OUTPUT -o tun+ -j ACCEPT
 Requirements:
 
 * [Vagrant](https://www.vagrantup.com/)
-* [VirtualBox](https://www.virtualbox.org/)
+* [libvirt](https://libvirt.org/)
 * [Ansible](https://docs.ansible.com/)
 * [Molecule](https://molecule.readthedocs.io/en/latest/index.html)
 * [yamllint](https://yamllint.readthedocs.io/en/stable/#)
@@ -208,7 +204,7 @@ molecule test
 ```
 
 I recommend to use [pyenv](https://github.com/pyenv/pyenv) for local testing.
-Within the Github Actions pipeline I use [my own molecule Docker image](https://github.com/borisskert/docker-molecule).
+Within the GitHub Actions pipeline I use [my own molecule action](https://github.com/borisskert/molecule-action).
 
 ## License
 

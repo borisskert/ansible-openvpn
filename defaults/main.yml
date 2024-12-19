@@ -13,7 +13,7 @@ openvpn_ca_organizational_unit_name: ''
 
 openvpn_server_common_name: ''
 openvpn_server_key_size: 2048
-openvpn_dh_parameter_size: 1024
+openvpn_dh_parameter_size: 2048
 
 
 # ----------------------------------------------------------------------------------------------------------------------

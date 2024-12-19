@@ -5,6 +5,4 @@
 
   roles:
     - role: install-docker
-      storage_driver: overlay2
-      cleanup_enabled: false
-      install_pip_docker: true
+      docker_storage_driver: overlay2

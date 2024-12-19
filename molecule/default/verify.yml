@@ -5,56 +5,89 @@
 
   tasks:
     - name: Should create openvpn server config
-      stat:
-        path: /srv/openvpn/config/openvpn.conf
-        checksum_algorithm: sha256
+      slurp:
+        src: /srv/openvpn/config/openvpn.conf
       register: server_config
-      # Expecting file to have content:
-      #  See ../shared/expected.openvpn.conf
-      failed_when: not (
-        server_config.stat.exists
-        and server_config.stat.checksum
-        == '5f4f7970aa5c6e265db8c04e490fa7ad7c3194f0cbbbd831822913ab7ccfd401'
-        )
+      failed_when:
+        not server_config.content == ( expected_content | b64encode )
+      vars:
+        expected_content: |
+          port 1194
+          proto udp
+          dev tun
+          
+          # --- Certificate --- #
+          ca /etc/openvpn/keys/ca.crt
+          cert /etc/openvpn/keys/Server.crt
+          key /etc/openvpn/keys/Server.key
+          
+          # --- Network --- #
+          server 10.0.0.0 255.255.0.0
+          ifconfig 10.0.0.1 255.255.0.0
+          ifconfig-pool-persist /tmp/ipp.txt
+          keepalive 10 120
+          
+          # --- Cipher --- #
+          cipher AES-256-CBC
+          
+          # --- Auth --- #
+          auth SHA512
+          
+          # --- DH --- #
+          dh /etc/openvpn/keys/dh.pem
+          
+          # --- TLS --- #
+          tls-server
+          tls-cipher DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-CAMELLIA256-SHA:DHE-RSA-AES256-SHA:DHE-RSA-CAMELLIA128-SHA:DHE-RSA-AES128-SHA:CAMELLIA256-SHA:AES256-SHA:CAMELLIA128-SHA:AES128-SHA
+          tls-version-min 1.3
+          remote-cert-tls client
+          tls-auth /etc/openvpn/keys/tls-auth.key 0
+          
+          user openvpnuser
+          group openvpnuser
+          persist-key
+          persist-tun
+          
+          # --- Log --- #
+          status /var/log/openvpn/status.log
+          log-append  /var/log/openvpn/openvpn.log
+          verb 9
 
     - name: Should template Dockerfile
-      stat:
-        path: /opt/openvpn/docker/Dockerfile
-        checksum_algorithm: sha256
+      slurp:
+        src: /opt/openvpn/docker/Dockerfile
       register: docker_file
-      # Expecting file to have content:
-      #  FROM alpine:3.11
-      #
-      #  MAINTAINER borisskert <boris.skert@gmail.com>
-      #
-      #  RUN adduser -DHs /sbin/nologin -u 3001 openvpnuser && \
-      #  apk --no-cache --no-progress upgrade && \
-      #  apk --no-cache --no-progress add \
-      #  openvpn~=2.4.8
-      #
-      #  RUN mkdir /usr/share/openvpn && \
-      #  cp /etc/openvpn/* /usr/share/openvpn/
-      #
-      #  VOLUME ["/etc/openvpn", "/var/log/openvpn/"]
-      #
-      #  EXPOSE 1194/udp
-      #
-      #  ENTRYPOINT ["openvpn"]
-      failed_when: not (
-        docker_file.stat.exists
-        and docker_file.stat.checksum
-        == '383453677003c61cbb242ea8eeb814b225b4414661829a1e9f7806f24d36de00'
-        )
+      failed_when:
+        not docker_file.content == ( expected_content | b64encode )
+      vars:
+        expected_content: |
+          FROM alpine:3.21
+          
+          LABEL MAINTAINER="Boris Skert <https://github.com/borisskert/ansible-openvpn>"
+  
+          RUN adduser -DHs /sbin/nologin -u 3001 openvpnuser && \
+              apk --no-cache --no-progress upgrade && \
+              apk --no-cache --no-progress add \
+                  openvpn~=2.6.12
+  
+          RUN mkdir /usr/share/openvpn && \
+              cp /etc/openvpn/* /usr/share/openvpn/
+  
+          VOLUME ["/etc/openvpn", "/var/log/openvpn/"]
+  
+          EXPOSE 1194/udp
+  
+          ENTRYPOINT ["openvpn"]
 
     - name: Should create docker image
       docker_image:
-        name: local/openvpn:2.4.8
+        name: local/openvpn:2.6.12
         source: local
         state: present
 
   post_tasks:
     - name: Delete docker image
       docker_image:
-        name: local/openvpn:2.4.8
+        name: local/openvpn:2.6.12
         state: absent
       failed_when: false

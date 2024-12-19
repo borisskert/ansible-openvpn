@@ -31,5 +31,5 @@
     group: root
     mode: 0700
 
-- include: create-client.yml
+- include_tasks: create-client.yml
   with_items: "{{ openvpn_clients }}"
